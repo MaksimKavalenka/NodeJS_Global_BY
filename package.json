@@ -1,0 +1,36 @@
+{
+  "name": "NodeJS_Global_BY",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/start.js"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2"
+    ]
+  },
+  "dependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0"
+  },
+  "description": "NodeJS_Global_BY application",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaksimKavalenkaBY/NodeJS_Global_BY.git"
+  },
+  "keywords": [
+    "NodeJS"
+  ],
+  "author": "Maksim Kavalenka <maksim.kavalenka@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaksimKavalenkaBY/NodeJS_Global_BY/issues"
+  },
+  "homepage": "https://github.com/MaksimKavalenkaBY/NodeJS_Global_BY#readme"
+}
