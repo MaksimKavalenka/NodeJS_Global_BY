@@ -1,6 +1,4 @@
-'use strict';
+import { Product, User } from './models';
 
-import * as Model from './models';
-
-new Model.ProductModel.Product();
-new Model.UserModel.User();
+new Product();
+new User();

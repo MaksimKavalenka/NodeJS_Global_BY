@@ -1,11 +1,7 @@
-'use strict';
+import config from '../config/config.json';
 
-const config = require('../config/config.json');
-
-export class Product {
-
-    constructor() {
-        console.log(config.product_log);
-    }
-
+export default class {
+  constructor() {
+    console.log(config.product_log);
+  }
 }
