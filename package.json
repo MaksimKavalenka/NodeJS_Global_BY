@@ -3,12 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "babel-node app.js"
+    "start": "nodemon app.js --exec babel-node"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
-    "babel-preset-stage-2": "^6.24.1"
+    "babel-preset-stage-2": "^6.24.1",
+    "bluebird": "^3.5.0",
+    "log": "^1.4.0",
+    "nodemon": "^1.12.1"
   },
   "description": "NodeJS_Global_BY application",
   "main": "app.js",

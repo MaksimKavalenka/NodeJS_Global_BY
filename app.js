@@ -1,4 +1,13 @@
-import { Product, User } from './models';
+import { DirWatcher, Importer } from './models';
 
-new Product();
-new User();
+const Log = require('log');
+
+const dirWatcher = new DirWatcher();
+const log = new Log();
+
+dirWatcher.watch('./data/', 10000);
+dirWatcher.on('dirwatcher:changed', (path) => {
+  Importer.import(path)
+    .then(result => log.info(`ASYNC ${path} ${result}`));
+  log.info(`SYNC ${path} ${Importer.importSync(path)}`);
+});
