@@ -1,7 +1,7 @@
-const Promise = require('bluebird');
-const EventEmitter = require('events');
-const fs = require('fs');
-const Log = require('log');
+import Promise from 'bluebird';
+import EventEmitter from 'events';
+import fs from 'fs';
+import Log from 'log';
 
 const log = new Log();
 const readdirAsync = Promise.promisify(fs.readdir);

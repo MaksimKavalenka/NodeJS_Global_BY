@@ -1,8 +1,7 @@
+import Promise from 'bluebird';
+import fs from 'fs';
+import Log from 'log';
 import config from '../config/config.json';
-
-const Promise = require('bluebird');
-const fs = require('fs');
-const Log = require('log');
 
 const log = new Log();
 const readFileAsync = Promise.promisify(fs.readFile);

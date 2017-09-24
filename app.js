@@ -1,6 +1,5 @@
+import Log from 'log';
 import { DirWatcher, Importer } from './models';
-
-const Log = require('log');
 
 const dirWatcher = new DirWatcher();
 const log = new Log();
