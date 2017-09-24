@@ -1,3 +1,5 @@
+import config from '../config/config.json';
+
 const Promise = require('bluebird');
 const fs = require('fs');
 const Log = require('log');
@@ -8,13 +10,16 @@ const readFileAsync = Promise.promisify(fs.readFile);
 export class Importer {
   static import(path) {
     return readFileAsync(path, 'utf8')
-      .then(content => Importer.csvToJson(content))
-      .catch(error => log.error(error.message));
+      .then(content => Importer.csvToJson(content));
   }
 
   static importSync(path) {
-    const content = fs.readFileSync(path, 'utf8');
-    return Importer.csvToJson(content);
+    if (fs.existsSync(path)) {
+      const content = fs.readFileSync(path, 'utf8');
+      return Importer.csvToJson(content);
+    }
+    log.error(config.file_not_found);
+    return '';
   }
 
   static csvToJson(content) {
