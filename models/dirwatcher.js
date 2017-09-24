@@ -12,10 +12,12 @@ export class DirWatcher extends EventEmitter {
       .then(files =>
         files.forEach((file) => {
           const filePath = `${path}${file}`;
-          fs.watchFile(filePath, { interval: delay }, () => {
-            log.debug(`${file} has been changed`);
-            this.emit('dirwatcher:changed', filePath);
-          });
+          if (file.split('.').pop() === 'csv') {
+            fs.watchFile(filePath, { interval: delay }, () => {
+              log.debug(`${file} has been changed`);
+              this.emit('dirwatcher:changed', filePath);
+            });
+          }
         }))
       .catch(error => log.error(error.message));
   }
