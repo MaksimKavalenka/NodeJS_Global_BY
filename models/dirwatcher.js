@@ -5,9 +5,10 @@ import { logger } from '../models';
 export class DirWatcher extends EventEmitter {
   watch(path, delay) {
     const watcher = chokidar.watch(path, {
-      ignored: '*.txt',
       persistent: true,
-      interval: delay,
+      ignored: '*.txt',
+      usePolling: true,
+      binaryInterval: delay,
     });
 
     watcher
