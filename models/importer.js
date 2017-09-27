@@ -26,21 +26,17 @@ export class Importer {
   }
 
   static csvToJson(content) {
-    const result = [];
+    let json = [];
     const lines = content.split('\n');
     const headers = lines[0].split(',');
 
-    for (let i = 1; i < lines.length; i += 1) {
-      const obj = {};
-      const line = lines[i].split(',');
+    json = lines
+      .slice(1)
+      .map(line => line.split(',').reduce((result, value, index) => {
+        result[headers[index]] = value;
+        return result;
+      }, {}));
 
-      for (let j = 0; j < headers.length; j += 1) {
-        obj[headers[j]] = line[j];
-      }
-
-      result.push(obj);
-    }
-
-    return JSON.stringify(result);
+    return JSON.stringify(json);
   }
 }
