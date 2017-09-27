@@ -1,24 +1,28 @@
-import Promise from 'bluebird';
 import fs from 'fs';
-import Log from 'log';
-import config from '../config/config.json';
+import { promisify } from 'util';
+import { logger } from '../models';
 
-const log = new Log();
-const readFileAsync = Promise.promisify(fs.readFile);
+const readFileAsync = promisify(fs.readFile);
 
 export class Importer {
-  static import(path) {
-    return readFileAsync(path, 'utf8')
-      .then(content => Importer.csvToJson(content));
+  static async import(path) {
+    try {
+      const content = await readFileAsync(path, 'utf8');
+      return Importer.csvToJson(content);
+    } catch (error) {
+      logger.log('error', error.message);
+    }
+    return null;
   }
 
   static importSync(path) {
-    if (fs.existsSync(path)) {
+    try {
       const content = fs.readFileSync(path, 'utf8');
       return Importer.csvToJson(content);
+    } catch (error) {
+      logger.log('error', error.message);
     }
-    log.error(config.file_not_found);
-    return '';
+    return null;
   }
 
   static csvToJson(content) {

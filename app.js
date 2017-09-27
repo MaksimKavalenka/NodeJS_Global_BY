@@ -1,13 +1,11 @@
-import Log from 'log';
-import { DirWatcher, Importer } from './models';
+import { DirWatcher, Importer, logger } from './models';
 
 const dirWatcher = new DirWatcher();
-const log = new Log();
 
 dirWatcher.watch('./data/', 10000);
 dirWatcher.on('dirwatcher:changed', (path) => {
   Importer.import(path)
-    .then(result => log.info(`ASYNC ${path} ${result}`))
-    .catch(error => log.error(error.message));
-  log.info(`SYNC ${path} ${Importer.importSync(path)}`);
+    .then(result => logger.log('info', `ASYNC ${path} ${result}`))
+    .catch(error => logger.log('error', error.message));
+  logger.log('info', `SYNC ${path} ${Importer.importSync(path)}`);
 });
