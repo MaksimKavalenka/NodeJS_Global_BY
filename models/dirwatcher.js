@@ -2,7 +2,7 @@ import chokidar from 'chokidar';
 import EventEmitter from 'events';
 import { logger } from '../models';
 
-export class DirWatcher extends EventEmitter {
+export default class DirWatcher extends EventEmitter {
   watch(path, delay) {
     const watcher = chokidar.watch(path, {
       persistent: true,

@@ -1,7 +1,6 @@
 import winston from 'winston';
 
-export const logger = new winston.Logger({
-  level: 'info',
+export default new winston.Logger({
   transports: [
     new (winston.transports.Console)({
       colorize: true,

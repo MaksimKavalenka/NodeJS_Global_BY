@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build": "babel **/*.js -d build --ignore data,node_modules",
+    "lint": "eslint **/*.js",
     "start": "nodemon app.js --exec babel-node"
   },
   "dependencies": {
@@ -15,7 +17,13 @@
   },
   "description": "NodeJS_Global_BY application",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MaksimKavalenkaBY/NodeJS_Global_BY.git"

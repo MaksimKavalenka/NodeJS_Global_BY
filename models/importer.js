@@ -4,7 +4,7 @@ import { logger } from '../models';
 
 const readFileAsync = promisify(fs.readFile);
 
-export class Importer {
+export default class Importer {
   static async import(path) {
     try {
       const content = await readFileAsync(path, 'utf8');
@@ -33,8 +33,9 @@ export class Importer {
     json = lines
       .slice(1)
       .map(line => line.split(',').reduce((result, value, index) => {
-        result[headers[index]] = value;
-        return result;
+        const temp = result;
+        temp[headers[index]] = value;
+        return temp;
       }, {}));
 
     return JSON.stringify(json);
