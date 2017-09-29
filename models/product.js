@@ -1,7 +1,8 @@
 import config from '../config/config.json';
+import { logger } from '../models';
 
 export default class {
   constructor() {
-    console.log(config.product_log);
+    logger.log('debug', config.product_log);
   }
 }
