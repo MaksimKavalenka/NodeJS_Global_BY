@@ -13,12 +13,12 @@ export default class DirWatcher extends EventEmitter {
 
     watcher
       .on('add', (filePath) => {
-        logger.log('debug', `${filePath} has been added`);
+        logger.debug(`${filePath} has been added`);
         this.emit('dirwatcher:changed', filePath);
       });
     watcher
       .on('change', (filePath) => {
-        logger.log('debug', `${filePath} has been changed`);
+        logger.debug(`${filePath} has been changed`);
         this.emit('dirwatcher:changed', filePath);
       });
   }

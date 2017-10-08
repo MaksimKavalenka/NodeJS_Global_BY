@@ -1,5 +1,8 @@
 {
   "app_name": "NodeMP HW App",
+  "file_not_found": "File is not found",
+  "no_arguments": "Arguments should be specified",
   "product_log": "Product module",
+  "unknown_option": "Unknown option",
   "user_log": "User module"
 }

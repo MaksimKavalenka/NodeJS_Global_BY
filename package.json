@@ -12,14 +12,20 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
     "chokidar": "^1.7.0",
+    "minimist": "^1.2.0",
     "nodemon": "^1.12.1",
-    "winston": "^2.3.1"
+    "replace-ext": "^1.0.0",
+    "request": "^2.83.0",
+    "split": "^1.0.1",
+    "through2": "^2.0.3",
+    "through2-map": "^3.0.0",
+    "winston": "^2.4.0"
   },
   "description": "NodeJS_Global_BY application",
   "main": "app.js",
   "devDependencies": {
-    "eslint": "^4.7.2",
-    "eslint-config-airbnb-base": "^12.0.1",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
     "eslint-plugin-import": "^2.7.0"
   },
   "repository": {

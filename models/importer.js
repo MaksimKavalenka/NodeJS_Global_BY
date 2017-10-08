@@ -10,7 +10,7 @@ export default class Importer {
       const content = await readFileAsync(path, 'utf8');
       return Importer.csvToJson(content);
     } catch (error) {
-      logger.log('error', error.message);
+      logger.error(error.message);
     }
     return null;
   }
@@ -20,7 +20,7 @@ export default class Importer {
       const content = fs.readFileSync(path, 'utf8');
       return Importer.csvToJson(content);
     } catch (error) {
-      logger.log('error', error.message);
+      logger.error(error.message);
     }
     return null;
   }
