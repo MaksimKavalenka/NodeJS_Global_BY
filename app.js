@@ -2,7 +2,7 @@ import { DirWatcher, Importer, logger } from './models';
 
 const dirWatcher = new DirWatcher();
 
-dirWatcher.watch('./data/', 10000);
+dirWatcher.watch('./data/**/*.csv', 10000);
 dirWatcher.on('dirwatcher:changed', (path) => {
   (async () => {
     const result = await Importer.import(path);

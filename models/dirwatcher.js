@@ -6,7 +6,6 @@ export default class DirWatcher extends EventEmitter {
   watch(path, delay) {
     const watcher = chokidar.watch(path, {
       persistent: true,
-      ignored: '**/*.txt',
       usePolling: true,
       binaryInterval: delay,
     });
