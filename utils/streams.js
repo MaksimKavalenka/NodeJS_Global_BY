@@ -8,6 +8,7 @@ import throughMap from 'through2-map';
 import { promisify } from 'util';
 import config from '../config/config.json';
 import { logger } from '../models';
+import { CheckUtils } from '../utils';
 
 const args = minimist(process.argv.slice(2), {
   alias: {
@@ -50,66 +51,15 @@ function csvToJson() {
   });
 }
 
-class CheckUtils {
-  static printHelpMessage(message) {
-    const usagePath = 'bin/usage.txt';
-    logger.warn(message);
-    fs.createReadStream(usagePath).pipe(process.stdout);
-  }
-
-  static checkArgs() {
-    const checkArgsFlag = (Object.keys(args).length > 1);
-    if (!checkArgsFlag) {
-      CheckUtils.printHelpMessage(config.no_args);
-    }
-    return checkArgsFlag;
-  }
-
-  static checkFileArg() {
-    const checkFileArgFlag = args.file;
-    if (!checkFileArgFlag) {
-      CheckUtils.printHelpMessage(`--file ${config.no_arg}`);
-    }
-    return checkFileArgFlag;
-  }
-
-  static checkPathArg() {
-    const checkPathArgFlag = args.path;
-    if (!checkPathArgFlag) {
-      CheckUtils.printHelpMessage(`--path ${config.no_arg}`);
-    }
-    return checkPathArgFlag;
-  }
-
-  static checkFile(filePath) {
-    const checkFileFlag = (fs.existsSync(filePath) && fs.statSync(filePath).isFile());
-    if (!checkFileFlag) {
-      logger.error(config.file_not_found);
-    }
-    return checkFileFlag;
-  }
-
-  static checkCsv(filePath) {
-    if (CheckUtils.checkFile(filePath)) {
-      const checkCsvFlag = (filePath.split('.').pop() === 'csv');
-      if (!checkCsvFlag) {
-        logger.error(config.wrong_ext);
-      }
-      return checkCsvFlag;
-    }
-    return false;
-  }
-}
-
-class Streams {
+export default class Streams {
   static run() {
-    if (CheckUtils.checkArgs()) {
+    if (CheckUtils.checkArgs(args)) {
       if (args.help) {
         Streams.printHelpMessage();
       } else {
         switch (args.action) {
           case 'io':
-            if (CheckUtils.checkFileArg()) {
+            if (CheckUtils.checkFileArg(args)) {
               Streams.inputOutput(args.file);
             }
             break;
@@ -117,17 +67,17 @@ class Streams {
             Streams.transform();
             break;
           case 'transform-file':
-            if (CheckUtils.checkFileArg()) {
+            if (CheckUtils.checkFileArg(args)) {
               Streams.transformFile(args.file);
             }
             break;
           case 'transform-save-file':
-            if (CheckUtils.checkFileArg()) {
+            if (CheckUtils.checkFileArg(args)) {
               Streams.transformAndSaveFile(args.file);
             }
             break;
           case 'bundle-css':
-            if (CheckUtils.checkPathArg()) {
+            if (CheckUtils.checkPathArg(args)) {
               Streams.cssBundler(args.path);
             }
             break;
@@ -181,6 +131,13 @@ class Streams {
     };
     bundle(files[count]);
   }
+
+  static printHelpMessage() {
+    const usagePath = 'bin/usage.txt';
+    fs.createReadStream(usagePath).pipe(process.stdout);
+  }
 }
 
-Streams.run();
+if (require.main === module) {
+  Streams.run();
+}

@@ -8,5 +8,6 @@ dirWatcher.on('dirwatcher:changed', (path) => {
     const result = await Importer.import(path);
     logger.info(`ASYNC ${path} ${result}`);
   })();
-  logger.info(`SYNC ${path} ${Importer.importSync(path)}`);
+  logger.info(`SYNC ${path}`);
+  Importer.importSync(path);
 });
