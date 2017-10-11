@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { promisify } from 'util';
 import { logger } from '../models';
-import { Streams } from '../utils';
 
 const readFileAsync = promisify(fs.readFile);
 
@@ -17,7 +16,13 @@ export default class Importer {
   }
 
   static importSync(path) {
-    Streams.transformFile(path);
+    try {
+      const content = fs.readFileSync(path, 'utf8');
+      return Importer.csvToJson(content);
+    } catch (error) {
+      logger.error(error.message);
+    }
+    return null;
   }
 
   static csvToJson(content) {
