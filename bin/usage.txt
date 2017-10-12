@@ -1,5 +1,5 @@
 
-    Usage: node utils/streams.js [--help] [--action=(action) [--file=(filePath)] [--path=(path)]]
+    Usage: babel-node utils/streams.js [--help] [--action=(action) [--file=(filePath)] [--path=(path)]]
 
     where (action) is one of:
         io, transform, transform-file, transform-save-file, bundle-css
