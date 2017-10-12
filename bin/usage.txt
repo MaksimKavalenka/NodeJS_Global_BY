@@ -26,4 +26,4 @@
     -h, --help      Quick help on usage
     -a, --action    Action to be performed
     -f, --file      Path of a file to read
-    -p, --path      Path of a folder that contains a bunch of CSS files
+    -t, --path      Path of a folder that contains a bunch of CSS files
