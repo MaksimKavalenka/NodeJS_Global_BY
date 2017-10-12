@@ -1,5 +1,11 @@
 {
   "app_name": "NodeMP HW App",
+  "file_not_found": "File is not found",
+  "no_args": "Arguments should be specified",
+  "no_arg": "argument should be specified",
   "product_log": "Product module",
-  "user_log": "User module"
+  "unknown_option": "Unknown option",
+  "user_log": "User module",
+  "wrong_action": "action is not found",
+  "wrong_ext": "Wrong file extention"
 }
