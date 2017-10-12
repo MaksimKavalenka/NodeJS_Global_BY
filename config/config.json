@@ -6,5 +6,6 @@
   "product_log": "Product module",
   "unknown_option": "Unknown option",
   "user_log": "User module",
+  "wrong_action": "action is not found",
   "wrong_ext": "Wrong file extention"
 }

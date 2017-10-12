@@ -14,7 +14,7 @@ const args = minimist(process.argv.slice(2), {
   alias: {
     action: 'a',
     file: 'f',
-    path: 'p',
+    path: 't',
     help: 'h',
   },
   unknown: (arg) => {
@@ -82,6 +82,8 @@ export default class Streams {
             }
             break;
           default:
+            logger.warn(`'${args.action}' ${config.wrong_action}`);
+            Streams.printHelpMessage();
             break;
         }
       }
@@ -126,6 +128,7 @@ export default class Streams {
         } else {
           const url = 'https://www.epam.com/etc/clientlibs/foundation/main.min.fc69c13add6eae57cd247a91c7e26a15.css';
           request(url).pipe(fs.createWriteStream(`${path}/bundle.css`, { flags: 'a' }));
+          logger.info(`Bundle ${url}`);
         }
       });
     };
