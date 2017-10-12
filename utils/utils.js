@@ -8,7 +8,6 @@ export default class CheckUtils {
     const checkArgsFlag = (Object.keys(args).length > 1);
     if (!checkArgsFlag) {
       logger.warn(config.no_args);
-      Streams.printHelpMessage();
     }
     return checkArgsFlag;
   }
@@ -17,7 +16,6 @@ export default class CheckUtils {
     const checkFileArgFlag = args.file;
     if (!checkFileArgFlag) {
       logger.warn(`--file ${config.no_arg}`);
-      Streams.printHelpMessage();
     }
     return checkFileArgFlag;
   }
@@ -26,7 +24,6 @@ export default class CheckUtils {
     const checkPathArgFlag = args.path;
     if (!checkPathArgFlag) {
       logger.warn(`--path ${config.no_arg}`);
-      Streams.printHelpMessage();
     }
     return checkPathArgFlag;
   }

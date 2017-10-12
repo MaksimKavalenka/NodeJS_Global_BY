@@ -1,26 +1,50 @@
 import fs from 'fs';
 import glob from 'glob';
-import minimist from 'minimist';
 import request from 'request';
 import split from 'split';
 import through from 'through2';
 import throughMap from 'through2-map';
 import { promisify } from 'util';
-import config from '../config/config.json';
+import yargs from 'yargs';
 import { logger } from '../models';
 import { CheckUtils } from '../utils';
 
-const args = minimist(process.argv.slice(2), {
-  alias: {
-    action: 'a',
-    file: 'f',
-    path: 'p',
-    help: 'h',
-  },
-  unknown: (arg) => {
-    logger.error(config.unknown_option, arg);
-  },
-});
+const ACTIONS = {
+  IO: 'io',
+  TRANSFORM: 'transform',
+  TRANSFORM_FILE: 'transform-file',
+  TRANSFORM_SAVE_FILE: 'transform-save-file',
+  BUNDLE_CSS: 'bundle-css',
+};
+
+const args = yargs
+  .version('1.0.0')
+  .usage('Usage: node utils/streams.js [--help] [--action=(action) [--file=(filePath)] [--path=(path)]]')
+  .help('h')
+  .option('action', {
+    alias: 'a',
+    choices: [
+      ACTIONS.IO,
+      ACTIONS.TRANSFORM,
+      ACTIONS.TRANSFORM_FILE,
+      ACTIONS.TRANSFORM_SAVE_FILE,
+      ACTIONS.BUNDLE_CSS,
+    ],
+    demandOption: true,
+    describe: 'Action to be performed',
+    type: 'string',
+  })
+  .option('file', {
+    alias: 'f',
+    describe: 'Path of a file to read',
+    type: 'string',
+  })
+  .option('path', {
+    alias: 'p',
+    describe: 'Path of a folder that contains a bunch of CSS files',
+    type: 'string',
+  })
+  .argv;
 
 const globAsync = promisify(glob);
 const streamUpperCase = throughMap(buffer => buffer.toString().toUpperCase());
@@ -54,36 +78,32 @@ function csvToJson() {
 export default class Streams {
   static run() {
     if (CheckUtils.checkArgs(args)) {
-      if (args.help) {
-        Streams.printHelpMessage();
-      } else {
-        switch (args.action) {
-          case 'io':
-            if (CheckUtils.checkFileArg(args)) {
-              Streams.inputOutput(args.file);
-            }
-            break;
-          case 'transform':
-            Streams.transform();
-            break;
-          case 'transform-file':
-            if (CheckUtils.checkFileArg(args)) {
-              Streams.transformFile(args.file);
-            }
-            break;
-          case 'transform-save-file':
-            if (CheckUtils.checkFileArg(args)) {
-              Streams.transformAndSaveFile(args.file);
-            }
-            break;
-          case 'bundle-css':
-            if (CheckUtils.checkPathArg(args)) {
-              Streams.cssBundler(args.path);
-            }
-            break;
-          default:
-            break;
-        }
+      switch (args.action) {
+        case ACTIONS.IO:
+          if (CheckUtils.checkFileArg(args)) {
+            Streams.inputOutput(args.file);
+          }
+          break;
+        case ACTIONS.TRANSFORM:
+          Streams.transform();
+          break;
+        case ACTIONS.TRANSFORM_FILE:
+          if (CheckUtils.checkFileArg(args)) {
+            Streams.transformFile(args.file);
+          }
+          break;
+        case ACTIONS.TRANSFORM_SAVE_FILE:
+          if (CheckUtils.checkFileArg(args)) {
+            Streams.transformAndSaveFile(args.file);
+          }
+          break;
+        case ACTIONS.BUNDLE_CSS:
+          if (CheckUtils.checkPathArg(args)) {
+            Streams.cssBundler(args.path);
+          }
+          break;
+        default:
+          break;
       }
     }
   }
@@ -130,11 +150,6 @@ export default class Streams {
       });
     };
     bundle(files[count]);
-  }
-
-  static printHelpMessage() {
-    const usagePath = 'bin/usage.txt';
-    fs.createReadStream(usagePath).pipe(process.stdout);
   }
 }
 
