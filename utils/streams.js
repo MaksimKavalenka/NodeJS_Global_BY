@@ -29,6 +29,7 @@ const streamUpperCase = throughMap(buffer => buffer.toString().toUpperCase());
 function csvToJson() {
   let headers = [];
   let parseHeader = true;
+  let firstChunk = true;
 
   return throughMap((buffer) => {
     if (parseHeader) {
@@ -43,7 +44,12 @@ function csvToJson() {
         jsonContent[header] = rawContent[index];
       });
 
-      return JSON.stringify(jsonContent);
+      if (firstChunk) {
+        firstChunk = false;
+        return JSON.stringify(jsonContent);
+      }
+
+      return `,${JSON.stringify(jsonContent)}`;
     }
     return ']';
   });
