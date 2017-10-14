@@ -29,5 +29,5 @@
     -h, --help      Quick help on usage
     -a, --action    Action to be performed
     -f, --file      Path of a file to read
-    -t, --path      Path of a folder that contains a bunch of CSS files
+    -p, --path      Path of a folder that contains a bunch of CSS files
     -c, --count     Count of lines

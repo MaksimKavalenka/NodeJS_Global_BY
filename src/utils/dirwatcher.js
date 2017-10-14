@@ -1,6 +1,6 @@
 import chokidar from 'chokidar';
 import EventEmitter from 'events';
-import { logger } from '../models';
+import { logger } from '../utils';
 
 export default class DirWatcher extends EventEmitter {
   watch(path, delay) {

@@ -1,20 +1,19 @@
 import fs from 'fs';
 import glob from 'glob';
 import minimist from 'minimist';
+import path from 'path';
 import request from 'request';
 import split from 'split';
-import through from 'through2';
 import throughMap from 'through2-map';
 import { promisify } from 'util';
-import config from '../config/config.json';
-import { logger } from '../models';
-import { CheckUtils } from '../utils';
+import config from '../../config/config.json';
+import { CheckUtils, logger } from '../../utils';
 
 const args = minimist(process.argv.slice(2), {
   alias: {
     action: 'a',
     file: 'f',
-    path: 't',
+    path: 'p',
     count: 'c',
     help: 'h',
   },
@@ -123,11 +122,11 @@ export default class Streams {
     }
   }
 
-  static async cssBundler(path) {
+  static async cssBundler(dirPath) {
     let count = 0;
-    const files = await globAsync(`${path}/**/*.css`);
+    const files = await globAsync(`${dirPath}/**/*.css`);
     const bundle = (filePath) => {
-      const stream = fs.createReadStream(filePath).pipe(fs.createWriteStream(`${path}/bundle.css`, { flags: 'a' }));
+      const stream = fs.createReadStream(filePath).pipe(fs.createWriteStream(`${dirPath}/bundle.css`, { flags: 'a' }));
       logger.info(`Bundle ${filePath}`);
 
       stream.once('finish', () => {
@@ -136,7 +135,7 @@ export default class Streams {
           bundle(files[count]);
         } else {
           const url = 'https://www.epam.com/etc/clientlibs/foundation/main.min.fc69c13add6eae57cd247a91c7e26a15.css';
-          request(url).pipe(fs.createWriteStream(`${path}/bundle.css`, { flags: 'a' }));
+          request(url).pipe(fs.createWriteStream(`${dirPath}/bundle.css`, { flags: 'a' }));
           logger.info(`Bundle ${url}`);
         }
       });
@@ -172,8 +171,8 @@ export default class Streams {
   }
 
   static printHelpMessage() {
-    const usagePath = 'bin/usage.txt';
-    fs.createReadStream(usagePath).pipe(process.stdout);
+    const usage = path.join(__dirname, '', 'usage.txt');
+    fs.createReadStream(usage).pipe(process.stdout);
   }
 }
 

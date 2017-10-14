@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "babel **/*.js --out-dir build --ignore data,node_modules",
+    "build": "babel src --out-dir build --copy-files --ignore data,node_modules",
     "lint": "eslint **/*.js",
-    "start": "nodemon app.js --exec babel-node"
+    "start": "nodemon src/app.js --exec babel-node"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",

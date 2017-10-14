@@ -1,5 +1,4 @@
-import { DirWatcher, Importer, logger } from './models';
-import { Streams } from './utils';
+import { DirWatcher, Importer, logger, Streams } from './utils';
 
 const dirWatcher = new DirWatcher();
 

@@ -1,7 +1,6 @@
 import fs from 'fs';
 import config from '../config/config.json';
-import { logger } from '../models';
-import { Streams } from '../utils';
+import { logger, Streams } from '../utils';
 
 export default class CheckUtils {
   static checkArgs(args) {
