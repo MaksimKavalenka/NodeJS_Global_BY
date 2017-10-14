@@ -1,4 +1,8 @@
 {
+  "ignore": [
+    "data",
+    "node_modules"
+  ],
   "presets": ["stage-2",
     ["env", {
       "targets": {

@@ -3,6 +3,7 @@
   "file_not_found": "File is not found",
   "no_args": "Arguments should be specified",
   "no_arg": "argument should be specified",
+  "only_number": "argument should be a number",
   "product_log": "Product module",
   "unknown_option": "Unknown option",
   "user_log": "User module",

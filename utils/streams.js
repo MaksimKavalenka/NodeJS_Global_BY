@@ -15,6 +15,7 @@ const args = minimist(process.argv.slice(2), {
     action: 'a',
     file: 'f',
     path: 't',
+    count: 'c',
     help: 'h',
   },
   unknown: (arg) => {
@@ -26,14 +27,14 @@ const globAsync = promisify(glob);
 const streamUpperCase = throughMap(buffer => buffer.toString().toUpperCase());
 
 function csvToJson() {
-  const json = [];
   let headers = [];
   let parseHeader = true;
 
-  return through((buffer, encoding, next) => {
+  return throughMap((buffer) => {
     if (parseHeader) {
       headers = buffer.toString().split(',');
       parseHeader = false;
+      return '[';
     } else if (buffer.toString().trim().length > 0) {
       const rawContent = buffer.toString().split(',');
       const jsonContent = {};
@@ -42,12 +43,9 @@ function csvToJson() {
         jsonContent[header] = rawContent[index];
       });
 
-      json.push(jsonContent);
+      return JSON.stringify(jsonContent);
     }
-    next();
-  }, function end(done) {
-    this.push(JSON.stringify(json));
-    done();
+    return ']';
   });
 }
 
@@ -79,6 +77,11 @@ export default class Streams {
           case 'bundle-css':
             if (CheckUtils.checkPathArg(args)) {
               Streams.cssBundler(args.path);
+            }
+            break;
+          case 'create-csv':
+            if (CheckUtils.checkFileArg(args) && CheckUtils.checkCountArg(args)) {
+              Streams.createCsv(args.file, args.count);
             }
             break;
           default:
@@ -133,6 +136,33 @@ export default class Streams {
       });
     };
     bundle(files[count]);
+  }
+
+  static createCsv(filePath, count) {
+    const percent = count / 100;
+    const writeStream = fs.createWriteStream(`${filePath}`);
+    let percentCount = percent;
+
+    const write = (i) => {
+      const sentence = (i > 0) ? `${i},name${i},brand${i},company${i},price${i},isbn${i}\n` : 'id,name,brand,company,price,isbn\n';
+      if (i <= count) {
+        if (writeStream.write(sentence)) {
+          write(i + 1);
+        } else {
+          writeStream.once('drain', () => write(i + 1));
+        }
+
+        if (percentCount < i) {
+          logger.info(`${(percentCount * 100) / count}%`);
+          percentCount += percent;
+        }
+      } else {
+        logger.info('100%');
+        writeStream.end();
+      }
+    };
+
+    write(0);
   }
 
   static printHelpMessage() {

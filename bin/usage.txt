@@ -1,25 +1,28 @@
 
-    Usage: babel-node utils/streams.js [--help] [--action=(action) [--file=(filePath)] [--path=(path)]]
+    Usage: babel-node utils/streams.js [--help] [--action=(action) [--file=(filePath)] [--path=(path)] [--count=(count)]]
 
     where (action) is one of:
-        io, transform, transform-file, transform-save-file, bundle-css
+        io, transform, transform-file, transform-save-file, bundle-css, create-csv
 
 
 
     io                     Pipes a file content to the process.stdout
-    Usage:                 node utils/streams.js -a io -f filePath
+    Usage:                 babel-node utils/streams.js -a io -f filePath
 
     transform              Transforms the process.stdin to upper case and pipes it to the process.stdout
-    Usage:                 node utils/streams.js -a transform
+    Usage:                 babel-node utils/streams.js -a transform
 
     transform-file         Transforms a file from CSV format to JSON format and pipes it to the process.stdout
-    Usage:                 node utils/streams.js -a transform-file -f filePath
+    Usage:                 babel-node utils/streams.js -a transform-file -f filePath
 
     transform-save-file    Transforms a file from CSV format to JSON format and saves it
-    Usage:                 node utils/streams.js -a transform-save-file -f filePath
+    Usage:                 babel-node utils/streams.js -a transform-save-file -f filePath
 
-    bundle-css             Concats a bunch of CSS files into a one file
-    Usage:                 node utils/streams.js -a bundle-css -p path
+    bundle-css             babel-Concats a bunch of CSS files into a one file
+    Usage:                 node utils/streams.js -a bundle-css -t path
+
+    create-csv             Creates CSV file that is filled with the common structured data
+    Usage:                 babel-node utils/streams.js -a create-csv -f filePath -c count
 
 
 
@@ -27,3 +30,4 @@
     -a, --action    Action to be performed
     -f, --file      Path of a file to read
     -t, --path      Path of a folder that contains a bunch of CSS files
+    -c, --count     Count of lines

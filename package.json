@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "babel **/*.js -d build --ignore data,node_modules",
+    "build": "babel **/*.js --out-dir build --ignore data,node_modules",
     "lint": "eslint **/*.js",
     "start": "nodemon app.js --exec babel-node"
   },

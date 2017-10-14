@@ -31,6 +31,15 @@ export default class CheckUtils {
     return checkPathArgFlag;
   }
 
+  static checkCountArg(args) {
+    const checkCountArgFlag = args.count;
+    if (!checkCountArgFlag) {
+      logger.warn(`--count ${config.no_arg}`);
+      Streams.printHelpMessage();
+    }
+    return checkCountArgFlag;
+  }
+
   static checkFile(filePath) {
     const checkFileFlag = (fs.existsSync(filePath) && fs.statSync(filePath).isFile());
     if (!checkFileFlag) {
