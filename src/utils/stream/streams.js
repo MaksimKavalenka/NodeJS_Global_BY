@@ -11,11 +11,11 @@ import { CheckUtils, logger } from '../../utils';
 
 const args = minimist(process.argv.slice(2), {
   alias: {
+    help: 'h',
     action: 'a',
     file: 'f',
     path: 'p',
     count: 'c',
-    help: 'h',
   },
   unknown: (arg) => {
     logger.error(config.unknown_option, arg);
@@ -66,29 +66,35 @@ export default class Streams {
               Streams.inputOutput(args.file);
             }
             break;
+
           case 'transform':
             Streams.transform();
             break;
+
           case 'transform-file':
             if (CheckUtils.checkFileArg(args)) {
               Streams.transformFile(args.file);
             }
             break;
+
           case 'transform-save-file':
             if (CheckUtils.checkFileArg(args)) {
               Streams.transformAndSaveFile(args.file);
             }
             break;
+
           case 'bundle-css':
             if (CheckUtils.checkPathArg(args)) {
               Streams.cssBundler(args.path);
             }
             break;
-          case 'create-csv':
+
+          case 'create-file':
             if (CheckUtils.checkFileArg(args) && CheckUtils.checkCountArg(args)) {
-              Streams.createCsv(args.file, args.count);
+              Streams.createFile(args.file, args.count);
             }
             break;
+
           default:
             logger.warn(`'${args.action}' ${config.wrong_action}`);
             Streams.printHelpMessage();
@@ -125,6 +131,7 @@ export default class Streams {
   static async cssBundler(dirPath) {
     let count = 0;
     const files = await globAsync(`${dirPath}/**/*.css`);
+
     const bundle = (filePath) => {
       const stream = fs.createReadStream(filePath).pipe(fs.createWriteStream(`${dirPath}/bundle.css`, { flags: 'a' }));
       logger.info(`Bundle ${filePath}`);
@@ -140,16 +147,18 @@ export default class Streams {
         }
       });
     };
+
     bundle(files[count]);
   }
 
-  static createCsv(filePath, count) {
+  static createFile(filePath, count) {
     const percent = count / 100;
     const writeStream = fs.createWriteStream(`${filePath}`);
     let percentCount = percent;
 
     const write = (i) => {
       const sentence = (i > 0) ? `${i},name${i},brand${i},company${i},price${i},isbn${i}\n` : 'id,name,brand,company,price,isbn\n';
+
       if (i <= count) {
         if (writeStream.write(sentence)) {
           write(i + 1);

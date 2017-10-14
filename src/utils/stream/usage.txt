@@ -2,7 +2,7 @@
     Usage: babel-node utils/streams.js [--help] [--action=(action) [--file=(filePath)] [--path=(path)] [--count=(count)]]
 
     where (action) is one of:
-        io, transform, transform-file, transform-save-file, bundle-css, create-csv
+        io, transform, transform-file, transform-save-file, bundle-css, create-file
 
 
 
@@ -21,7 +21,7 @@
     bundle-css             babel-Concats a bunch of CSS files into a one file
     Usage:                 node utils/streams.js -a bundle-css -t path
 
-    create-csv             Creates CSV file that is filled with the common structured data
+    create-file            Creates file that is filled with the common structured data
     Usage:                 babel-node utils/streams.js -a create-csv -f filePath -c count
 
 
