@@ -35,6 +35,9 @@ export default class CheckUtils {
     if (!checkCountArgFlag) {
       logger.warn(`--count ${config.no_arg}`);
       Streams.printHelpMessage();
+    } else if (Number.isNaN(parseFloat(args.count)) || !Number.isFinite(args.count)) {
+      logger.warn(`--count ${config.only_number}`);
+      return false;
     }
     return checkCountArgFlag;
   }
@@ -51,7 +54,7 @@ export default class CheckUtils {
     if (CheckUtils.checkFile(filePath)) {
       const checkCsvFlag = (filePath.split('.').pop() === 'csv');
       if (!checkCsvFlag) {
-        logger.error(config.wrong_ext);
+        logger.warn(config.wrong_ext);
       }
       return checkCsvFlag;
     }
