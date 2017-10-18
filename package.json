@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "babel src --out-dir build --copy-files",
+    "build": "babel src --out-dir dist --copy-files",
     "lint": "eslint src",
     "start": "nodemon src/app.js --exec babel-node"
   },

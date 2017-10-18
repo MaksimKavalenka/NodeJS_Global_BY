@@ -1,28 +1,28 @@
 
-    Usage: node build/utils/stream/streams.js [--help] [--action=(action) [--file=(filePath)] [--path=(dirPath)] [--count=(count)]]
+    Usage: node dist/utils/stream/streams.js [--help] [--action=(action) [--file=(filePath)] [--path=(dirPath)] [--count=(count)]]
 
     where (action) is one of:
-        io, transform, transform-file, transform-save-file, bundle-css, create-file
+        io, transform, transform_file, transform_save_file, bundle_css, create_file
 
 
 
     io                     Pipes a file content to the process.stdout
-    Usage:                 node build/utils/stream/streams.js -a io -f {filePath}
+    Usage:                 node dist/utils/stream/streams.js -a io -f {filePath}
 
     transform              Transforms the process.stdin to upper case and pipes it to the process.stdout
-    Usage:                 node build/utils/stream/streams.js -a transform
+    Usage:                 node dist/utils/stream/streams.js -a transform
 
     transform-file         Transforms a file from CSV format to JSON format and pipes it to the process.stdout
-    Usage:                 node build/utils/stream/streams.js -a transform-file -f {filePath}
+    Usage:                 node dist/utils/stream/streams.js -a transform_file -f {filePath}
 
     transform-save-file    Transforms a file from CSV format to JSON format and saves it
-    Usage:                 node build/utils/stream/streams.js -a transform-save-file -f {filePath}
+    Usage:                 node dist/utils/stream/streams.js -a transform_save_file -f {filePath}
 
     bundle-css             babel-Concats a bunch of CSS files into a one file
-    Usage:                 node build/utils/stream/streams.js -a bundle-css -p {dirPath}
+    Usage:                 node dist/utils/stream/streams.js -a bundle_css -p {dirPath}
 
     create-file            Creates file that is filled with the common structured data
-    Usage:                 node build/utils/stream/streams.js -a create-file -f {filePath} -c {count}
+    Usage:                 node dist/utils/stream/streams.js -a create_file -f {filePath} -c {count}
 
 
 

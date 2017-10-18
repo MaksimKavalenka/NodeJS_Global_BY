@@ -1,26 +1,12 @@
 import fs from 'fs';
 import glob from 'glob';
-import minimist from 'minimist';
 import path from 'path';
 import request from 'request';
 import split from 'split';
 import throughMap from 'through2-map';
 import { promisify } from 'util';
 import config from '../../config/config.json';
-import { CheckUtils, logger } from '../../utils';
-
-const args = minimist(process.argv.slice(2), {
-  alias: {
-    help: 'h',
-    action: 'a',
-    file: 'f',
-    path: 'p',
-    count: 'c',
-  },
-  unknown: (arg) => {
-    logger.error(config.unknown_option, arg);
-  },
-});
+import { ArgUtils, StreamUtils, args, actionHandler, logger } from '../../utils';
 
 const globAsync = promisify(glob);
 const streamUpperCase = throughMap(buffer => buffer.toString().toUpperCase());
@@ -35,7 +21,7 @@ function csvToJson() {
       headers = buffer.toString().split(',');
       parseHeader = false;
       return '[';
-    } else if (buffer.toString().trim().length > 0) {
+    } else if (buffer.toString().length > 0) {
       const rawContent = buffer.toString().split(',');
       const jsonContent = {};
 
@@ -56,56 +42,23 @@ function csvToJson() {
 
 export default class Streams {
   static run() {
-    if (CheckUtils.checkArgs(args)) {
-      if (args.help) {
-        Streams.printHelpMessage();
-      } else {
-        switch (args.action) {
-          case 'io':
-            if (CheckUtils.checkFileArg(args)) {
-              Streams.inputOutput(args.file);
-            }
-            break;
-
-          case 'transform':
-            Streams.transform();
-            break;
-
-          case 'transform-file':
-            if (CheckUtils.checkFileArg(args)) {
-              Streams.transformFile(args.file);
-            }
-            break;
-
-          case 'transform-save-file':
-            if (CheckUtils.checkFileArg(args)) {
-              Streams.transformAndSaveFile(args.file);
-            }
-            break;
-
-          case 'bundle-css':
-            if (CheckUtils.checkPathArg(args)) {
-              Streams.cssBundler(args.path);
-            }
-            break;
-
-          case 'create-file':
-            if (CheckUtils.checkFileArg(args) && CheckUtils.checkCountArg(args)) {
-              Streams.createFile(args.file, args.count);
-            }
-            break;
-
-          default:
-            logger.warn(`'${args.action}' ${config.wrong_action}`);
-            Streams.printHelpMessage();
-            break;
-        }
-      }
+    if (!ArgUtils.isArgsExist(args)) {
+      return;
+    }
+    if (args.help) {
+      Streams.printHelpMessage();
+    } else if (Object.prototype.hasOwnProperty.call(actionHandler, args.action)) {
+      actionHandler[args.action].handler(args);
+    } else if (args.action) {
+      logger.warn(`'${args.action}' ${config.wrong_action}`);
+      Streams.printHelpMessage();
+    } else {
+      actionHandler.helper.handler(['action']);
     }
   }
 
   static inputOutput(filePath) {
-    if (CheckUtils.checkFile(filePath)) {
+    if (ArgUtils.isFileExists(filePath)) {
       fs.createReadStream(filePath).pipe(process.stdout);
     }
   }
@@ -115,13 +68,13 @@ export default class Streams {
   }
 
   static transformFile(filePath) {
-    if (CheckUtils.checkCsv(filePath)) {
+    if (ArgUtils.isFileCsv(filePath)) {
       fs.createReadStream(filePath).pipe(split()).pipe(csvToJson()).pipe(process.stdout);
     }
   }
 
   static transformAndSaveFile(filePath) {
-    if (CheckUtils.checkCsv(filePath)) {
+    if (ArgUtils.isFileCsv(filePath)) {
       const outputPath = `${filePath.substr(0, filePath.lastIndexOf('.'))}.json`;
       fs.createReadStream(filePath).pipe(split()).pipe(csvToJson())
         .pipe(fs.createWriteStream(outputPath));
@@ -149,6 +102,12 @@ export default class Streams {
     };
 
     bundle(files[count]);
+  }
+
+  static async cssBundlerTest(dirPath) {
+    const files = await globAsync(`${dirPath}/**/*.css`);
+    const url = 'https://www.epam.com/etc/clientlibs/foundation/main.min.fc69c13add6eae57cd247a91c7e26a15.css';
+    StreamUtils.combineStreams(files.map(file => fs.createReadStream(file)), request(url)).pipe(fs.createWriteStream(`${dirPath}/bundle.css`, { flags: 'a' }));
   }
 
   static createFile(filePath, count) {
