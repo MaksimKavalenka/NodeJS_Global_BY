@@ -82,29 +82,6 @@ export default class Streams {
   }
 
   static async cssBundler(dirPath) {
-    let count = 0;
-    const files = await globAsync(`${dirPath}/**/*.css`);
-
-    const bundle = (filePath) => {
-      const stream = fs.createReadStream(filePath).pipe(fs.createWriteStream(`${dirPath}/bundle.css`, { flags: 'a' }));
-      logger.info(`Bundle ${filePath}`);
-
-      stream.once('finish', () => {
-        count += 1;
-        if (files[count]) {
-          bundle(files[count]);
-        } else {
-          const url = 'https://www.epam.com/etc/clientlibs/foundation/main.min.fc69c13add6eae57cd247a91c7e26a15.css';
-          request(url).pipe(fs.createWriteStream(`${dirPath}/bundle.css`, { flags: 'a' }));
-          logger.info(`Bundle ${url}`);
-        }
-      });
-    };
-
-    bundle(files[count]);
-  }
-
-  static async cssBundlerTest(dirPath) {
     const files = await globAsync(`${dirPath}/**/*.css`);
     const url = 'https://www.epam.com/etc/clientlibs/foundation/main.min.fc69c13add6eae57cd247a91c7e26a15.css';
     StreamUtils.combineStreams(files.map(file => fs.createReadStream(file)), request(url)).pipe(fs.createWriteStream(`${dirPath}/bundle.css`, { flags: 'a' }));

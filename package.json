@@ -12,6 +12,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
     "chokidar": "^1.7.0",
+    "combined-stream": "^1.0.5",
     "glob": "^7.1.2",
     "minimist": "^1.2.0",
     "nodemon": "^1.12.1",

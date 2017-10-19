@@ -1,3 +1,4 @@
+import combinedStream from 'combined-stream';
 import fs from 'fs';
 import config from '../../config/config.json';
 import { logger, Streams } from '../../utils';
@@ -54,7 +55,10 @@ export class ArgUtils {
 
 export class StreamUtils {
   static combineStreams(streams, resource) {
-    const streamPipe = streams.reduce((pipe, stream) => pipe.pipe(stream), streams[0]);
-    return streamPipe.pipe(resource);
+    const streamPipe = combinedStream.create();
+    streams.forEach((stream) => {
+      streamPipe.append(stream);
+    });
+    return streamPipe.append(resource);
   }
 }
