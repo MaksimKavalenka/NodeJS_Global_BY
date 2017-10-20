@@ -3,6 +3,7 @@ import glob from 'glob';
 import path from 'path';
 import request from 'request';
 import split from 'split';
+import through from 'through2';
 import throughMap from 'through2-map';
 import { promisify } from 'util';
 import config from '../../config/config.json';
@@ -16,11 +17,11 @@ function csvToJson() {
   let parseHeader = true;
   let firstChunk = true;
 
-  return throughMap((buffer) => {
+  const bodyFunc = function body(buffer, encoding, next) {
     if (parseHeader) {
       headers = buffer.toString().split(',');
       parseHeader = false;
-      return '[';
+      this.push('[');
     } else if (buffer.toString().length > 0) {
       const rawContent = buffer.toString().split(',');
       const jsonContent = {};
@@ -31,13 +32,20 @@ function csvToJson() {
 
       if (firstChunk) {
         firstChunk = false;
-        return JSON.stringify(jsonContent);
+        this.push(JSON.stringify(jsonContent));
+      } else {
+        this.push(`,${JSON.stringify(jsonContent)}`);
       }
-
-      return `,${JSON.stringify(jsonContent)}`;
     }
-    return ']';
-  });
+    next();
+  };
+
+  const endFunc = function end(next) {
+    this.push(']');
+    next();
+  };
+
+  return through.obj(bodyFunc, endFunc);
 }
 
 export default class Streams {
