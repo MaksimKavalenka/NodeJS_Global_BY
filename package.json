@@ -5,7 +5,7 @@
   "scripts": {
     "build": "babel src --out-dir dist --copy-files",
     "lint": "eslint src",
-    "start": "nodemon src/app.js --exec babel-node"
+    "start": "nodemon src/index.js --exec babel-node"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
@@ -13,6 +13,8 @@
     "babel-preset-stage-2": "^6.24.1",
     "chokidar": "^1.7.0",
     "combined-stream": "^1.0.5",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
     "glob": "^7.1.2",
     "minimist": "^1.2.0",
     "nodemon": "^1.12.1",

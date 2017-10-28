@@ -7,7 +7,7 @@ import through from 'through2';
 import throughMap from 'through2-map';
 import { promisify } from 'util';
 import config from '../../config/config.json';
-import { ArgUtils, StreamUtils, args, actionHandler, logger } from '../../utils';
+import { ArgUtils, StreamUtils, args, actionHandler, logger } from '../../middlewares';
 
 const globAsync = promisify(glob);
 const streamUpperCase = throughMap(buffer => buffer.toString().toUpperCase());

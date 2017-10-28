@@ -1,6 +1,6 @@
 import minimist from 'minimist';
 import config from '../../config/config.json';
-import { ArgUtils, Streams, logger } from '../../utils';
+import { ArgUtils, Streams, logger } from '../../middlewares';
 
 export const args = minimist(process.argv.slice(2), {
   alias: {

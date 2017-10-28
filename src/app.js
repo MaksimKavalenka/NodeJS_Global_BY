@@ -1,16 +1,21 @@
-import { DirWatcher, Importer, logger, Streams } from './utils';
+import cookieParser from 'cookie-parser';
+import express from 'express';
+import { echoServer, htmlServer, jsonServer, plainTextServer } from './middlewares';
 
-const dirWatcher = new DirWatcher();
+const app = express();
+const router = express.Router();
 
-dirWatcher.watch('./data/**/*.csv', 10000);
-dirWatcher.on('dirwatcher:changed', (path) => {
-  (async () => {
-    const result = await Importer.import(path);
-    logger.info(`ASYNC ${path} ${result}`);
-  })();
+plainTextServer(8081);
+htmlServer(8082);
+jsonServer(8083);
+echoServer(8084);
 
-  logger.info(`SYNC ${path} ${Importer.importSync(path)}`);
+app.use(express.json());
+app.use(cookieParser());
+app.use('/api', router);
 
-  logger.info(`STREAM ${path}`);
-  Streams.transformFile(path);
+router.get('/products/:id', (req, res) => {
+  res.json({ id: req.params.id });
 });
+
+module.exports = app;

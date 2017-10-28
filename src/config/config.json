@@ -5,6 +5,7 @@
   "no_arg": "argument should be specified",
   "only_number": "argument should be a number",
   "product_log": "Product module",
+  "server_listening": "server is listening on port",
   "unknown_option": "Unknown option",
   "user_log": "User module",
   "wrong_action": "action is not found",

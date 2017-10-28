@@ -1,7 +1,7 @@
 import combinedStream from 'combined-stream';
 import fs from 'fs';
 import config from '../../config/config.json';
-import { logger, Streams } from '../../utils';
+import { logger, Streams } from '../../middlewares';
 
 export class ArgUtils {
   static isArgsExist(args) {
