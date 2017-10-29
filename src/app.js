@@ -5,10 +5,10 @@ import { productRouter, userRouter } from './routes';
 
 const app = express();
 
-plainTextServer(8081);
-htmlServer(8082);
-jsonServer(8083);
-echoServer(8084);
+plainTextServer(8091);
+htmlServer(8092);
+jsonServer(8093);
+echoServer(8094);
 
 app.use((req, res, next) => {
   logger.debug(`${req.method} ${req.url}`);
