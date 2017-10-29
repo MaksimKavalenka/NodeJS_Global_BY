@@ -1,21 +1,16 @@
-import cookieParser from 'cookie-parser';
 import express from 'express';
-import { echoServer, htmlServer, jsonServer, plainTextServer } from './middlewares';
+import { ExpressMiddleware, echoServer, htmlServer, jsonServer, plainTextServer } from './middlewares';
+import { productRouter, userRouter } from './routes';
 
 const app = express();
-const router = express.Router();
 
 plainTextServer(8081);
 htmlServer(8082);
 jsonServer(8083);
 echoServer(8084);
 
-app.use(express.json());
-app.use(cookieParser());
-app.use('/api', router);
-
-router.get('/products/:id', (req, res) => {
-  res.json({ id: req.params.id });
-});
+ExpressMiddleware.handleRequest(app);
+app.use('/api', productRouter);
+app.use('/api', userRouter);
 
 module.exports = app;

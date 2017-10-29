@@ -1,4 +1,5 @@
 import config from '../config/config.json';
+import { TypeUtils } from '../helpers';
 import { logger } from '../middlewares';
 
 export default class ArgUtils {
@@ -23,7 +24,7 @@ export default class ArgUtils {
   static isArgNumber(args, key, printHelpMessageFunc) {
     const isArgNumberFlag = ArgUtils.isArgExists(args, key, printHelpMessageFunc);
     if (isArgNumberFlag) {
-      if (Number.isNaN(parseFloat(args.count)) || !Number.isFinite(args.count)) {
+      if (!TypeUtils.isNumber(args[key])) {
         logger.warn(`--${key} ${config.only_number}`);
         return false;
       }

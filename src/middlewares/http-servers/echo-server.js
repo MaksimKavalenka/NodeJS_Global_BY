@@ -5,5 +5,5 @@ import { logger } from '../../middlewares';
 export default function createEchoServer(port) {
   http.createServer((req, res) => {
     req.pipe(res);
-  }).listen(port, () => logger.info(`Echo ${config.server_listening} ${port}!`));
+  }).listen(port, () => logger.info(`Echo ${config.server_listening} ${port}`));
 }

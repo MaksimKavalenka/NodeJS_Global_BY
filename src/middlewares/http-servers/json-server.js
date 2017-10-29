@@ -20,5 +20,5 @@ export default function createJsonServer(port) {
       'Content-Type': 'application/json',
     });
     res.end(JSON.stringify(product));
-  }).listen(port, () => logger.info(`JSON ${config.server_listening} ${port}!`));
+  }).listen(port, () => logger.info(`JSON ${config.server_listening} ${port}`));
 }
