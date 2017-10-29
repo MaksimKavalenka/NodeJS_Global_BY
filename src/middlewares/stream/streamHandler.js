@@ -1,6 +1,7 @@
 import minimist from 'minimist';
 import config from '../../config/config.json';
-import { ArgUtils, Streams, logger } from '../../middlewares';
+import { ArgUtils } from '../../helpers';
+import { Streams, logger } from '../../middlewares';
 
 export const args = minimist(process.argv.slice(2), {
   alias: {
@@ -16,10 +17,10 @@ export const args = minimist(process.argv.slice(2), {
 });
 
 export const argHandler = {
-  action: () => ArgUtils.isArgExists(args, 'action'),
-  file: () => ArgUtils.isArgExists(args, 'file'),
-  path: () => ArgUtils.isArgExists(args, 'path'),
-  count: () => ArgUtils.isArgNumber(args, 'count'),
+  action: () => ArgUtils.isArgExists(args, 'action', Streams.printHelpMessage),
+  file: () => ArgUtils.isArgExists(args, 'file', Streams.printHelpMessage),
+  path: () => ArgUtils.isArgExists(args, 'path', Streams.printHelpMessage),
+  count: () => ArgUtils.isArgNumber(args, 'count', Streams.printHelpMessage),
 };
 
 export const actionHandler = {
