@@ -9,7 +9,9 @@ htmlServer(8082);
 jsonServer(8083);
 echoServer(8084);
 
-ExpressMiddleware.handleRequest(app);
+app.use(express.json());
+app.use(ExpressMiddleware.cookieParser);
+app.use(ExpressMiddleware.queryParser);
 app.use('/api', productRouter);
 app.use('/api', userRouter);
 
