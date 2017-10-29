@@ -8,5 +8,5 @@ export default function createPlainTextServer(port) {
       'Content-Type': 'text/plain',
     });
     res.end('Hello World');
-  }).listen(port, () => logger.info(`JSON ${config.server_listening} ${port}`));
+  }).listen(port, () => logger.info(`Plain text ${config.server_listening} ${port}`));
 }
