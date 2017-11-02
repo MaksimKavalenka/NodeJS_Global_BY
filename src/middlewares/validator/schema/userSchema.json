@@ -1,0 +1,17 @@
+{
+  "title": "User Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "age": {
+      "type": "number",
+      "minimum": 0
+    },
+    "city": {
+      "type": "string"
+    }
+  },
+  "required": ["name", "age", "city"]
+}

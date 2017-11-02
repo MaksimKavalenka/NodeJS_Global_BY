@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import _ from 'lodash';
 import { Review } from '../models';
 
 const reviews = [];

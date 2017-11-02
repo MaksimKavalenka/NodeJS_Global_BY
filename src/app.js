@@ -1,20 +1,16 @@
 import express from 'express';
 import { ProductController, ReviewController, UserController } from './controllers';
-import { ExpressMiddleware, echoServer, htmlServer, jsonServer, plainTextServer, logger } from './middlewares';
+import { ExpressMiddleware, logger } from './middlewares';
 import { productRouter, userRouter } from './routes';
 
 const app = express();
-
-plainTextServer(8091);
-htmlServer(8092);
-jsonServer(8093);
-echoServer(8094);
 
 app.use((req, res, next) => {
   logger.debug(`${req.method} ${req.url}`);
   next();
 });
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(ExpressMiddleware.cookieParser);
 app.use(ExpressMiddleware.queryParser);
 app.use('/api', productRouter);

@@ -1,5 +1,6 @@
 import express from 'express';
 import { ProductRouteUtils, ReviewRouteUtils } from '../helpers';
+import { Validator, schema } from '../middlewares';
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ path.GET_PRODUCTS = path.ROOT;
 path.GET_PRODUCT_REVIEWS = `${path.ROOT}/:id/reviews`;
 
 router.route(path.ADD_PRODUCT)
-  .post(ProductRouteUtils.addProduct);
+  .post(Validator.validateSchema(schema.PRODUCT_SCHEMA), ProductRouteUtils.addProduct);
 
 router
   .get(`${path.GET_PRODUCT}`, ProductRouteUtils.getProduct, ProductRouteUtils.sendProduct)
