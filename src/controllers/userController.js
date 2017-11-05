@@ -11,7 +11,6 @@ export default class UserController {
   }
 
   static getUserById(id) {
-
     return _.find(users, user => user.id === id);
   }
 
