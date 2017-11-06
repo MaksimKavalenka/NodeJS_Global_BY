@@ -13,14 +13,13 @@ path.GET_PRODUCT_REVIEWS = `${path.ROOT}/:id/reviews`;
 router.route(path.ADD_PRODUCT)
   .post(Validator.validateSchema(schema.PRODUCT_SCHEMA), ProductRouteUtils.addProduct);
 
-router
-  .get(`${path.GET_PRODUCT}`, ProductRouteUtils.getProduct, ProductRouteUtils.sendProduct)
-  .get(`${path.GET_PRODUCT}`, ProductRouteUtils.productNotFound);
+router.route(path.GET_PRODUCT)
+  .get(ProductRouteUtils.getProduct, ProductRouteUtils.sendProduct);
 
-router
-  .get(`${path.GET_PRODUCTS}`, ProductRouteUtils.getProducts);
+router.route(path.GET_PRODUCTS)
+  .get(ProductRouteUtils.getProducts);
 
-router
-  .get(`${path.GET_PRODUCT_REVIEWS}`, ReviewRouteUtils.getProductReviews);
+router.route(path.GET_PRODUCT_REVIEWS)
+  .get(ReviewRouteUtils.getProductReviews);
 
 module.exports = router;

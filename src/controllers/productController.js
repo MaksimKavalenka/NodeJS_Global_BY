@@ -11,7 +11,7 @@ export default class ProductController {
   }
 
   static getProductById(id) {
-    return _.find(products, product => product.id === id);
+    return _.find(products, product => (product.id === id));
   }
 
   static getProducts() {

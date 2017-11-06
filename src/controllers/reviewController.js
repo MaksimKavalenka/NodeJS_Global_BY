@@ -11,11 +11,11 @@ export default class ReviewController {
   }
 
   static getReviewById(id) {
-    return _.find(reviews, review => review.id === id);
+    return _.find(reviews, review => (review.id === id));
   }
 
   static getProductReviews(productId) {
-    return _.filter(reviews, review => review.productId === productId);
+    return _.filter(reviews, review => (review.productId === productId));
   }
 
   static getReviews() {

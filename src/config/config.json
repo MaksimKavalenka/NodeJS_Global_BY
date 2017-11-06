@@ -1,12 +1,3 @@
 {
-  "app_name": "NodeMP HW App",
-  "file_not_found": "File is not found",
-  "no_args": "Arguments should be specified",
-  "no_arg": "argument should be specified",
-  "only_number": "argument should be a number",
-  "product_not_found": "Product is not found",
-  "server_listening": "server is listening on port",
-  "unknown_option": "Unknown option",
-  "wrong_action": "action is not found",
-  "wrong_ext": "Wrong file extention"
+  "expiration_time": 600
 }

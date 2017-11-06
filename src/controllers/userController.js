@@ -4,14 +4,14 @@ import { User } from '../models';
 const users = [];
 
 export default class UserController {
-  static addUser(name, age, city) {
-    const user = new User(name, age, city);
+  static addUser(name, email) {
+    const user = new User(name, email);
     users.push(user);
     return user;
   }
 
   static getUserById(id) {
-    return _.find(users, user => user.id === id);
+    return _.find(users, user => (user.id === id));
   }
 
   static getUsers() {

@@ -1,5 +1,4 @@
 import http from 'http';
-import config from '../../config/config.json';
 import { logger } from '../../middlewares';
 
 export default function createPlainTextServer(port) {
@@ -8,5 +7,5 @@ export default function createPlainTextServer(port) {
       'Content-Type': 'text/plain',
     });
     res.end('Hello World');
-  }).listen(port, () => logger.info(`Plain text ${config.server_listening} ${port}`));
+  }).listen(port, () => logger.info(`Plain text ${__('server_listening')} ${port}`));
 }

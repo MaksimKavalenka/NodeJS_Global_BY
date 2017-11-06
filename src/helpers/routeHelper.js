@@ -1,5 +1,18 @@
-import config from '../config/config.json';
-import { ProductController, ReviewController, UserController } from '../controllers';
+import { CredentialsController, ProductController, ReviewController, UserController } from '../controllers';
+import { JWT } from '../middlewares';
+
+export class CredentialsRouteUtils {
+  static verifyCredentials(req, res) {
+    const creds = CredentialsController.verifyCredentials(req.body.login, req.body.password);
+    if (creds) {
+      const user = UserController.getUserById(creds.userId);
+      const jwt = JWT.generateJwt(user);
+      res.json(jwt);
+    } else {
+      res.status(403).send({ success: false, message: __('auth_failure') });
+    }
+  }
+}
 
 export class ProductRouteUtils {
   static addProduct(req, res) {
@@ -8,13 +21,8 @@ export class ProductRouteUtils {
   }
 
   static getProduct(req, res, next) {
-    const product = ProductController.getProductById(req.params.id);
-    if (product) {
-      req.product = product;
-      next();
-    } else {
-      next('route');
-    }
+    req.product = ProductController.getProductById(req.params.id);
+    next();
   }
 
   static getProducts(req, res) {
@@ -23,12 +31,11 @@ export class ProductRouteUtils {
   }
 
   static sendProduct(req, res) {
-    res.json(req.product);
-  }
-
-  static productNotFound(req, res) {
-    res.status(404);
-    res.end(`${config.product_not_found}: ${req.params.id}`);
+    if (req.product) {
+      res.json(req.product);
+    } else {
+      res.status(404).send({ success: false, message: `${__('product_not_found')}: ${req.params.id}` });
+    }
   }
 }
 
