@@ -1,16 +1,30 @@
 import { CredentialsController, ProductController, ReviewController, UserController } from '../controllers';
-import { JWT } from '../middlewares';
+import { ExpressMiddleware, JWT } from '../middlewares';
 
 export class CredentialsRouteUtils {
   static verifyCredentials(req, res) {
     const creds = CredentialsController.verifyCredentials(req.body.login, req.body.password);
     if (creds) {
       const user = UserController.getUserById(creds.userId);
-      const jwt = JWT.generateJwt(user);
-      res.json(jwt);
+      const data = {
+        user: {
+          username: user.name,
+          email: user.email,
+        },
+        token: JWT.generateJwt(user),
+      };
+      ExpressMiddleware.sendResponse(res, 200, data);
     } else {
-      res.status(403).send({ success: false, message: __('auth_failure') });
+      ExpressMiddleware.sendResponse(res, 403, { error: __('auth_failure') });
     }
+  }
+
+  static verifyCredentialsPassport(req, res) {
+    const data = {
+      user: req.user,
+      token: JWT.generateJwt(req.user),
+    };
+    ExpressMiddleware.sendResponse(res, 200, data);
   }
 }
 
@@ -34,7 +48,7 @@ export class ProductRouteUtils {
     if (req.product) {
       res.json(req.product);
     } else {
-      res.status(404).send({ success: false, message: `${__('product_not_found')}: ${req.params.id}` });
+      ExpressMiddleware.sendResponse(res, 404, { error: `${__('product_not_found')}: ${req.params.id}` });
     }
   }
 }

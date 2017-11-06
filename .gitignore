@@ -3,4 +3,4 @@ data/
 !data/readme.txt
 dist/
 node_modules/
-src/config/customConfig.json
+src/config/configs/customConfig.json

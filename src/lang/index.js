@@ -1,1 +1,1 @@
-export { default as initLocale } from './locales';
+export { default } from './locales';

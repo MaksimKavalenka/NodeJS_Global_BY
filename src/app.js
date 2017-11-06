@@ -1,7 +1,8 @@
 import express from 'express';
 import i18n from 'i18n';
+import passport from 'passport';
 import { CredentialsController, ProductController, ReviewController, UserController } from './controllers';
-import { ExpressMiddleware, logger } from './middlewares';
+import { ExpressMiddleware, JWT, logger } from './middlewares';
 import { authRouters, productRouter, userRouter } from './routes';
 
 const app = express();
@@ -13,8 +14,10 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(i18n.init);
-app.use(ExpressMiddleware.cookieParser);
-app.use(ExpressMiddleware.queryParser);
+app.use(passport.initialize());
+app.use(ExpressMiddleware.cookieParser());
+app.use(ExpressMiddleware.queryParser());
+app.use(/\/((?!auth).)*/, JWT.verifyJwt());
 app.use('/api', authRouters);
 app.use('/api', productRouter);
 app.use('/api', userRouter);

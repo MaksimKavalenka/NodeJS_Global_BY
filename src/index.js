@@ -1,10 +1,11 @@
 import app from './app';
-import { initLocale } from './lang';
-import { echoServer, htmlServer, jsonServer, plainTextServer, logger } from './middlewares';
+import initLocale from './lang';
+import { echoServer, htmlServer, jsonServer, plainTextServer, initPassport, logger } from './middlewares';
 
 const port = process.env.PORT || 8090;
 
 initLocale();
+initPassport();
 app.listen(port, () => logger.info(`App ${__('server_listening')} ${port}`));
 
 plainTextServer(8091);

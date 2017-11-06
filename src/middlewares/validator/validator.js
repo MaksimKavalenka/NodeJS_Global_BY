@@ -3,6 +3,7 @@ import credentialsSchema from './schema/credentialsSchema.json';
 import productSchema from './schema/productSchema.json';
 import reviewSchema from './schema/reviewSchema.json';
 import userSchema from './schema/userSchema.json';
+import { ExpressMiddleware } from '../../middlewares';
 
 export const schema = {
   CREDENTIALS_SCHEMA: 'credentialsSchema',
@@ -18,23 +19,16 @@ validator.addSchema(reviewSchema, schema.REVIEW_SCHEMA);
 validator.addSchema(userSchema, schema.USER_SCHEMA);
 
 export class Validator {
-  static errorResponse(schemaErrors) {
-    const errorResp = schemaErrors.map(error =>
-      ({
-        path: error.dataPath,
-        message: error.message,
-      }));
-    return {
-      status: 'failed',
-      errors: errorResp,
-    };
-  }
-
   static validateSchema(schemaName) {
     return (req, res, next) => {
       const isValid = validator.validate(schemaName, req.body);
       if (!isValid) {
-        res.status(400).json(Validator.errorResponse(validator.errors));
+        const errors = validator.errors.map(error =>
+          ({
+            path: error.dataPath,
+            message: error.message,
+          }));
+        ExpressMiddleware.sendResponse(res, 400, { error: errors });
       } else {
         next();
       }
