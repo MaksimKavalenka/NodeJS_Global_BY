@@ -26,6 +26,11 @@ export class CredentialsRouteUtils {
     };
     ExpressMiddleware.sendResponse(res, 200, data);
   }
+
+  static verifyCredentialsPassportSocial(req, res) {
+    const data = req.user;
+    ExpressMiddleware.sendResponse(res, 200, data);
+  }
 }
 
 export class ProductRouteUtils {
