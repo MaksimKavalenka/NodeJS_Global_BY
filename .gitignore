@@ -1,0 +1,5 @@
+.idea/
+data/
+!data/readme.txt
+dist/
+node_modules/

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { promisify } from 'util';
-import { logger } from '../utils';
+import { logger } from '../middlewares';
 
 const readFileAsync = promisify(fs.readFile);
 

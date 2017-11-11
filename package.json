@@ -5,15 +5,18 @@
   "scripts": {
     "build": "babel src --out-dir dist --copy-files",
     "lint": "eslint src",
-    "start": "nodemon src/app.js --exec babel-node"
+    "start": "nodemon src/index.js --exec babel-node"
   },
   "dependencies": {
+    "ajv": "^5.3.0",
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "chokidar": "^1.7.0",
     "combined-stream": "^1.0.5",
+    "express": "^4.16.2",
     "glob": "^7.1.2",
+    "lodash": "^4.17.4",
     "minimist": "^1.2.0",
     "nodemon": "^1.12.1",
     "request": "^2.83.0",
@@ -25,9 +28,9 @@
   "description": "NodeJS_Global_BY application",
   "main": "app.js",
   "devDependencies": {
-    "eslint": "^4.8.0",
-    "eslint-config-airbnb-base": "^12.0.2",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
   },
   "repository": {
     "type": "git",

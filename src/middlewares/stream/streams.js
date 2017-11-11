@@ -7,7 +7,8 @@ import through from 'through2';
 import throughMap from 'through2-map';
 import { promisify } from 'util';
 import config from '../../config/config.json';
-import { ArgUtils, StreamUtils, args, actionHandler, logger } from '../../utils';
+import { ArgUtils, FileUtils, StreamUtils } from '../../helpers';
+import { args, actionHandler, logger } from '../../middlewares';
 
 const globAsync = promisify(glob);
 const streamUpperCase = throughMap(buffer => buffer.toString().toUpperCase());
@@ -50,7 +51,7 @@ function csvToJson() {
 
 export default class Streams {
   static run() {
-    if (!ArgUtils.isArgsExist(args)) {
+    if (!ArgUtils.isArgsExist(args, Streams.printHelpMessage)) {
       return;
     }
     if (args.help) {
@@ -66,7 +67,7 @@ export default class Streams {
   }
 
   static inputOutput(filePath) {
-    if (ArgUtils.isFileExists(filePath)) {
+    if (FileUtils.isFileExists(filePath)) {
       fs.createReadStream(filePath).pipe(process.stdout);
     }
   }
@@ -76,13 +77,13 @@ export default class Streams {
   }
 
   static transformFile(filePath) {
-    if (ArgUtils.isFileCsv(filePath)) {
+    if (FileUtils.isFileCsv(filePath)) {
       fs.createReadStream(filePath).pipe(split()).pipe(csvToJson()).pipe(process.stdout);
     }
   }
 
   static transformAndSaveFile(filePath) {
-    if (ArgUtils.isFileCsv(filePath)) {
+    if (FileUtils.isFileCsv(filePath)) {
       const outputPath = `${filePath.substr(0, filePath.lastIndexOf('.'))}.json`;
       fs.createReadStream(filePath).pipe(split()).pipe(csvToJson())
         .pipe(fs.createWriteStream(outputPath));

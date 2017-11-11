@@ -1,0 +1,17 @@
+{
+  "title": "Product Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0
+    }
+  },
+  "required": ["name", "brand", "price"]
+}
