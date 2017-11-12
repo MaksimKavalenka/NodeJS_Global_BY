@@ -8,4 +8,13 @@ export default class Product {
     this.brand = brand;
     this.price = price;
   }
+
+  toString() {
+    return {
+      id: this.id,
+      name: this.name,
+      brand: this.brand,
+      price: this.price,
+    };
+  }
 }

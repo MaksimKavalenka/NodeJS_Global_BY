@@ -6,7 +6,7 @@ const router = express.Router();
 const path = { ROOT: '/users' };
 path.GET_USERS = path.ROOT;
 
-router
-  .get(`${path.GET_USERS}`, UserRouteUtils.getUsers);
+router.route(path.GET_USERS)
+  .get(UserRouteUtils.getUsers);
 
 module.exports = router;

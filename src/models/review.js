@@ -8,4 +8,13 @@ export default class Review {
     this.author = author;
     this.text = text;
   }
+
+  toString() {
+    return {
+      id: this.id,
+      productId: this.productId,
+      author: this.author,
+      text: this.text,
+    };
+  }
 }
