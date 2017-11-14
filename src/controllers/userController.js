@@ -1,22 +1,19 @@
-import _ from 'lodash';
-import { User } from '../models';
+import sequelize from 'sequelize';
+import User from '../database/models/user';
+import { client } from '../middlewares';
 
-let userId = 0;
-const users = [];
+const userModel = User(client, sequelize.DataTypes);
 
 export default class UserController {
   static addUser(name, email) {
-    userId += 1;
-    const user = new User(userId, name, email);
-    users.push(user);
-    return user;
+    return userModel.create({ name, email });
   }
 
   static getUserById(id) {
-    return _.find(users, user => (user.id === id));
+    return userModel.find({ where: { id } });
   }
 
   static getUsers() {
-    return users;
+    return userModel.findAll();
   }
 }

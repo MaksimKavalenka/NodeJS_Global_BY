@@ -4,7 +4,7 @@ import { ExpressMiddleware } from '../middlewares';
 
 export default class JWT {
   static generateJwt(payload) {
-    return jwt.sign(payload.toString(), config.secret, { expiresIn: config.expiration_time });
+    return jwt.sign(payload, config.secret, { expiresIn: config.expiration_time });
   }
 
   static verifyJwt() {

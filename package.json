@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "build": "babel src --out-dir dist --copy-files",
-    "db": "npm run db-create && npm run db-migrate",
+    "db": "npm run db-create && npm run db-migrate && npm run db-seed",
     "db-create": "sequelize db:create",
     "db-migrate": "sequelize db:migrate",
+    "db-seed": "sequelize db:seed:all",
     "lint": "eslint src",
     "start": "nodemon src/index.js --exec babel-node"
   },

@@ -1,3 +1,4 @@
+import util from 'util';
 import { TypeUtils } from '../helpers';
 import { logger } from '../middlewares';
 
@@ -14,7 +15,7 @@ export default class ArgUtils {
   static isArgExists(args, key, printHelpMessageFunc) {
     const isArgExistsFlag = args[key];
     if (!isArgExistsFlag) {
-      logger.warn(`--${key} ${__('no_arg')}`);
+      logger.warn(util.format(__('no_arg'), key));
       printHelpMessageFunc();
     }
     return isArgExistsFlag;
@@ -24,7 +25,7 @@ export default class ArgUtils {
     const isArgNumberFlag = ArgUtils.isArgExists(args, key, printHelpMessageFunc);
     if (isArgNumberFlag) {
       if (!TypeUtils.isNumber(args[key])) {
-        logger.warn(`--${key} ${__('only_number')}`);
+        logger.warn(util.format(__('only_number'), key));
         return false;
       }
     }

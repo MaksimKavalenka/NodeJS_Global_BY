@@ -17,3 +17,7 @@ export const client = new Sequelize('nodejs', config.postgres_login, config.post
 export function connect() {
   client.authenticate();
 }
+
+export function disconnect() {
+  client.close();
+}

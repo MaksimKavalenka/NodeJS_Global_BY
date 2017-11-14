@@ -3,7 +3,7 @@ import session from 'express-session';
 import i18n from 'i18n';
 import passport from 'passport';
 import config from './config';
-import { CredentialsController, ProductController, ReviewController, UserController } from './controllers';
+import { CredentialsController, UserController } from './controllers';
 import { ExpressMiddleware, JWT, logger } from './middlewares';
 import { authRouters, productRouter, userRouter } from './routes';
 
@@ -30,24 +30,5 @@ app.use(/\/((?!auth).)*/, JWT.verifyJwt());
 app.use('/api', authRouters);
 app.use('/api', productRouter);
 app.use('/api', userRouter);
-
-ProductController.addProduct('product1', 'brand1', 55);
-ProductController.addProduct('product2', 'brand2', 85);
-ProductController.addProduct('product3', 'brand3', 144);
-
-ReviewController.addReview('1', 'author11', 'text11');
-ReviewController.addReview('1', 'author12', 'text12');
-ReviewController.addReview('1', 'author13', 'text13');
-
-ReviewController.addReview('2', 'author21', 'text21');
-ReviewController.addReview('2', 'author22', 'text22');
-ReviewController.addReview('2', 'author23', 'text23');
-
-ReviewController.addReview('3', 'author31', 'text31');
-ReviewController.addReview('3', 'author32', 'text32');
-ReviewController.addReview('3', 'author33', 'text33');
-
-const user = UserController.addUser('Maks', 'admin@node.com');
-CredentialsController.addCredentials(user.id, 'admin', 'node123');
 
 module.exports = app;

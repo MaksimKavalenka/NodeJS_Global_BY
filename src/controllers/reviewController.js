@@ -1,24 +1,25 @@
-import _ from 'lodash';
-import { Review } from '../models';
+import sequelize from 'sequelize';
+import Review from '../database/models/review';
+import { client } from '../middlewares';
 
-const reviews = [];
+const reviewModel = Review(client, sequelize.DataTypes);
 
 export default class ReviewController {
-  static addReview(productId, author, text) {
-    const review = new Review(productId, author, text);
-    reviews.push(review);
-    return review;
+  static addReview(reviewId, productId, author, text) {
+    return reviewModel.create({
+      reviewId, productId, author, text,
+    });
   }
 
   static getReviewById(id) {
-    return _.find(reviews, review => (review.id === id));
+    return reviewModel.find({ where: { id } });
   }
 
   static getProductReviews(productId) {
-    return _.filter(reviews, review => (review.productId === productId));
+    return reviewModel.findAll({ where: { productId } });
   }
 
   static getReviews() {
-    return reviews;
+    return reviewModel.findAll();
   }
 }

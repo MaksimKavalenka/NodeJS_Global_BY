@@ -42,8 +42,12 @@ export default class ExpressMiddleware {
     const response = {
       code: responseCode,
       message: httpStatus[responseCode],
-      data: responseData,
     };
+    if (responseCode < 400) {
+      response.data = responseData;
+    } else {
+      response.error = responseData;
+    }
     res.json(response);
   }
 }

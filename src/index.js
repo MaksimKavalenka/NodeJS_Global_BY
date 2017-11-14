@@ -1,3 +1,4 @@
+import util from 'util';
 import app from './app';
 import initLocale from './lang';
 import { echoServer, htmlServer, jsonServer, plainTextServer, initPassport, connect, logger } from './middlewares';
@@ -10,7 +11,7 @@ initPassport();
 const createServer = async () => {
   try {
     await connect();
-    app.listen(port, () => logger.info(`App ${__('server_listening')} ${port}`));
+    app.listen(port, () => logger.info(util.format(__('server_listening'), 'App', port)));
   } catch (err) {
     logger.error(err);
   }

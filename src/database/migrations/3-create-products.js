@@ -6,30 +6,29 @@ module.exports = {
         allowNull: false,
         autoIncrement: false,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
+        unique: true
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       brand: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       company: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       price: {
+        allowNull: false,
         type: Sequelize.DOUBLE
       },
       isbn: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.STRING,
+        unique: true
       }
     });
   },

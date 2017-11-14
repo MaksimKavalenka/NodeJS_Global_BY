@@ -3,12 +3,13 @@
   "auth_failure": "Login or password is wrong",
   "file_not_found": "File is not found",
   "no_args": "Arguments should be specified",
-  "no_arg": "argument should be specified",
+  "no_arg": "%s argument should be specified",
   "no_token": "No token provided",
-  "only_number": "argument should be a number",
-  "product_not_found": "Product is not found",
-  "server_listening": "server is listening on port",
+  "only_number": "%s argument should be a number",
+  "product_exists": "Product with id %s already exists",
+  "product_not_found": "Product with id %s is not found",
+  "server_listening": "%s server is listening on port %d",
   "unknown_option": "Unknown option",
-  "wrong_action": "action is not found",
+  "wrong_action": "%s action is not found",
   "wrong_ext": "Wrong file extention"
 }

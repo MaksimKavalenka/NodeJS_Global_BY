@@ -3,6 +3,7 @@ import http from 'http';
 import path from 'path';
 import split from 'split';
 import through from 'through2';
+import util from 'util';
 import { logger } from '../../middlewares';
 
 const replaceMessage = () => through((buffer, encoding, next) => next(null, buffer.toString().replace(/{message}/gi, 'It\'s the real message text')));
@@ -14,5 +15,5 @@ export default function createHtmlServer(port) {
       'Content-Type': 'text/html',
     });
     fs.createReadStream(index).pipe(split()).pipe(replaceMessage()).pipe(res);
-  }).listen(port, () => logger.info(`HTML ${__('server_listening')} ${port}`));
+  }).listen(port, () => logger.info(util.format(__('server_listening'), 'HTML', port)));
 }
