@@ -1,9 +1,6 @@
-let id = 0;
-
 export default class User {
-  constructor(name, email) {
-    id += 1;
-    this.id = String(id);
+  constructor(id, name, email) {
+    this.id = id;
     this.name = name;
     this.email = email;
   }

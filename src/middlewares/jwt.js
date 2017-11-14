@@ -11,7 +11,7 @@ export default class JWT {
     return (req, res, next) => {
       const token = req.headers['x-access-token'];
       if (token) {
-        jwt.verify(token, config.secret, (error, decoded) => {
+        jwt.verify(token, config.secret, (error) => {
           if (error) {
             ExpressMiddleware.sendResponse(res, 400, error);
           } else {

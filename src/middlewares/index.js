@@ -5,5 +5,6 @@ export { default as Importer } from './importer';
 export { default as JWT } from './jwt';
 export { default as logger } from './log';
 export { default as initPassport } from './passport';
+export { client, connect } from './postgres';
 export * from './stream';
 export * from './validator';

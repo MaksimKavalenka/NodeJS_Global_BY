@@ -2,16 +2,25 @@
   "title": "Product Schema",
   "type": "object",
   "properties": {
+    "id": {
+      "type": "string"
+    },
     "name": {
       "type": "string"
     },
     "brand": {
       "type": "string"
     },
+    "company": {
+      "type": "string"
+    },
     "price": {
       "type": "number",
       "minimum": 0
+    },
+    "isbn": {
+      "type": "string"
     }
   },
-  "required": ["name", "brand", "price"]
+  "required": ["id", "name", "brand", "company", "price", "isbn"]
 }

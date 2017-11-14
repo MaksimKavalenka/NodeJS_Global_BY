@@ -1,12 +1,11 @@
-let id = 0;
-
 export default class Product {
-  constructor(name, brand, price) {
-    id += 1;
-    this.id = String(id);
+  constructor(id, name, brand, company, price, isbn) {
+    this.id = id;
     this.name = name;
     this.brand = brand;
+    this.company = company;
     this.price = price;
+    this.isbn = isbn;
   }
 
   toString() {
@@ -14,7 +13,9 @@ export default class Product {
       id: this.id,
       name: this.name,
       brand: this.brand,
+      company: this.company,
       price: this.price,
+      isbn: this.isbn,
     };
   }
 }

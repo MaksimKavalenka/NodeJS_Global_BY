@@ -1,13 +1,22 @@
 import app from './app';
 import initLocale from './lang';
-import { echoServer, htmlServer, jsonServer, plainTextServer, initPassport, logger } from './middlewares';
+import { echoServer, htmlServer, jsonServer, plainTextServer, initPassport, connect, logger } from './middlewares';
 
 const port = process.env.PORT || 8090;
 
 initLocale();
 initPassport();
-app.listen(port, () => logger.info(`App ${__('server_listening')} ${port}`));
 
+const createServer = async () => {
+  try {
+    await connect();
+    app.listen(port, () => logger.info(`App ${__('server_listening')} ${port}`));
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
+createServer();
 plainTextServer(8091);
 htmlServer(8092);
 jsonServer(8093);

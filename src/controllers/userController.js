@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import { User } from '../models';
 
+let userId = 0;
 const users = [];
 
 export default class UserController {
   static addUser(name, email) {
-    const user = new User(name, email);
+    userId += 1;
+    const user = new User(userId, name, email);
     users.push(user);
     return user;
   }
