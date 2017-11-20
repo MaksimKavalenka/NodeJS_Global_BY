@@ -9,7 +9,7 @@ import util from 'util';
 import { ProductController } from '../../controllers';
 import { ArgUtils, FileUtils, StreamUtils, TypeUtils } from '../../helpers';
 import initLocale from '../../lang';
-import { args, actionHandler, connect, disconnect, logger } from '../../middlewares';
+import { args, actionHandler, connectors, logger } from '../../middlewares';
 
 const globAsync = util.promisify(glob);
 const streamUpperCase = throughMap(buffer => buffer.toString().toUpperCase());
@@ -67,7 +67,7 @@ function readProductsIntoDatabase() {
   };
 
   const endFunc = async function end(next) {
-    await disconnect();
+    await connectors.MONGO.disconnect();
     next();
   };
 
@@ -117,7 +117,7 @@ export default class Streams {
 
   static async readProducts(filePath) {
     if (FileUtils.isFileCsv(filePath)) {
-      await connect();
+      await connectors.MONGO.connect();
       fs.createReadStream(filePath).pipe(split()).pipe(readProductsIntoDatabase());
     }
   }

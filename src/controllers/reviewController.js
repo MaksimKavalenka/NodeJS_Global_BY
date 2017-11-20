@@ -1,8 +1,8 @@
 import sequelize from 'sequelize';
 import Review from '../database/models/review';
-import { client } from '../middlewares';
+import { connectors } from '../middlewares';
 
-const reviewModel = Review(client, sequelize.DataTypes);
+const reviewModel = Review(connectors.POSTGRES.client, sequelize.DataTypes);
 
 export default class ReviewController {
   static addReview(reviewId, productId, author, text) {

@@ -1,8 +1,8 @@
 import sequelize from 'sequelize';
 import Credentials from '../database/models/credentials';
-import { client } from '../middlewares';
+import { connectors } from '../middlewares';
 
-const credentialsModel = Credentials(client, sequelize.DataTypes);
+const credentialsModel = Credentials(connectors.POSTGRES.client, sequelize.DataTypes);
 
 export default class CredentialsController {
   static addCredentials(userId, login, password) {

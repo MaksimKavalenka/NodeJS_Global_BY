@@ -1,8 +1,8 @@
 import sequelize from 'sequelize';
 import Product from '../database/models/product';
-import { client } from '../middlewares';
+import { connectors } from '../middlewares';
 
-const productModel = Product(client, sequelize.DataTypes);
+const productModel = Product(connectors.POSTGRES.client, sequelize.DataTypes);
 
 export default class ProductController {
   static addProduct(id, name, brand, company, price, isbn) {

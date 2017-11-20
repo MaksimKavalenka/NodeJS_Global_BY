@@ -3,7 +3,6 @@ import session from 'express-session';
 import i18n from 'i18n';
 import passport from 'passport';
 import config from './config';
-import { CredentialsController, UserController } from './controllers';
 import { ExpressMiddleware, JWT, logger } from './middlewares';
 import { authRouters, productRouter, userRouter } from './routes';
 

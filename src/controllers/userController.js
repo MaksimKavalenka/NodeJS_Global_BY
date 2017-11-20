@@ -1,8 +1,8 @@
 import sequelize from 'sequelize';
 import User from '../database/models/user';
-import { client } from '../middlewares';
+import { connectors } from '../middlewares';
 
-const userModel = User(client, sequelize.DataTypes);
+const userModel = User(connectors.POSTGRES.client, sequelize.DataTypes);
 
 export default class UserController {
   static addUser(name, email) {
