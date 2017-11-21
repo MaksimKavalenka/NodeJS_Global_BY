@@ -12,7 +12,7 @@ export default function initPassport() {
   });
 
   passport.deserializeUser((id, next) => {
-    const user = UserController.getUserById(id);
+    const user = UserController.getUser(id);
     next(null, user);
   });
 
@@ -35,7 +35,7 @@ export default function initPassport() {
   }, (login, password, next) => {
     const creds = CredentialsController.verifyCredentials(login, password);
     if (creds) {
-      const user = UserController.getUserById(creds.userId);
+      const user = UserController.getUser(creds.userId);
       next(null, user);
     } else {
       next(null, false, __('auth_failure'));

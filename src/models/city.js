@@ -8,9 +8,18 @@ const citySchema = mongoose.Schema({
     lat: { type: Number, required: true },
     long: { type: Number, required: true },
   },
-  lastModifiedDate: { type: Date, default: Date.now },
+  lastModifiedDate: Date,
 }, {
   versionKey: false,
+});
+
+citySchema.pre('save', function (next) {
+  this.update({}, { $set: { lastModifiedDate: new Date() } });
+  next();
+});
+citySchema.pre('update', function (next) {
+  this.update({}, { $set: { lastModifiedDate: new Date() } });
+  next();
 });
 
 const City = mongoose.model('City', citySchema);

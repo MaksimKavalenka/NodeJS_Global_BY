@@ -1,21 +1,22 @@
-import sequelize from 'sequelize';
-import Product from '../database/models/product';
-import { connectors } from '../middlewares';
-
-const productModel = Product(connectors.POSTGRES.client, sequelize.DataTypes);
+import { Product } from '../models';
 
 export default class ProductController {
-  static addProduct(id, name, brand, company, price, isbn) {
-    return productModel.create({
-      id, name, brand, company, price, isbn,
+  static addProduct(_id, name, brand, company, price, isbn) {
+    const product = new Product({
+      _id, name, brand, company, price, isbn,
     });
+    return product.save();
   }
 
-  static getProductById(id) {
-    return productModel.find({ where: { id } });
+  static getProduct(id) {
+    return Product.findById(id);
   }
 
   static getProducts() {
-    return productModel.findAll();
+    return Product.find();
+  }
+
+  static deleteProduct(_id) {
+    return Product.remove({ _id });
   }
 }

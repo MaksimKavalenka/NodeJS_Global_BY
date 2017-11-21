@@ -4,6 +4,10 @@
     "__": false
   },
   "rules": {
-    "linebreak-style": ["error", "windows"]
+    "func-names": ["error", "never"],
+    "linebreak-style": ["error", "windows"],
+    "no-underscore-dangle": ["error", {
+      "allow": ["_id"]
+    }]
   }
 }

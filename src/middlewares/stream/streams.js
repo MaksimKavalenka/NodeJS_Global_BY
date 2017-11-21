@@ -19,7 +19,7 @@ function csvToJson() {
   let parseHeader = true;
   let firstChunk = true;
 
-  const bodyFunc = function body(buffer, encoding, next) {
+  const bodyFunc = (buffer, encoding, next) => {
     if (parseHeader) {
       headers = buffer.toString().split(',');
       parseHeader = false;
@@ -36,7 +36,7 @@ function csvToJson() {
     next();
   };
 
-  const endFunc = function end(next) {
+  const endFunc = (next) => {
     this.push(']');
     next();
   };
@@ -48,7 +48,7 @@ function readProductsIntoDatabase() {
   let headers = [];
   let parseHeader = true;
 
-  const bodyFunc = async function body(buffer, encoding, next) {
+  const bodyFunc = async (buffer, encoding, next) => {
     if (parseHeader) {
       headers = buffer.toString().split(',');
       parseHeader = false;
@@ -66,7 +66,7 @@ function readProductsIntoDatabase() {
     next();
   };
 
-  const endFunc = async function end(next) {
+  const endFunc = async (next) => {
     await connectors.MONGO.disconnect();
     next();
   };
