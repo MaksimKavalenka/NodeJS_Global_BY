@@ -1,8 +1,6 @@
-import mongodb from 'mongodb';
+import mongoose from 'mongoose';
 import Sequelize from 'sequelize';
 import config from '../config/index';
-
-const mongoClient = mongodb.MongoClient;
 
 const postgresClient = new Sequelize('nodejs', config.postgres_login, config.postgres_password, {
   host: 'localhost',
@@ -18,7 +16,7 @@ const postgresClient = new Sequelize('nodejs', config.postgres_login, config.pos
 const connectors = {
   MONGO: {
     connect: () => {},
-    disconnect: () => mongoClient.disconnect(),
+    disconnect: () => {},
   },
   POSTGRES: {
     client: postgresClient,
@@ -28,7 +26,11 @@ const connectors = {
 };
 
 connectors.MONGO.connect = async () => {
-  connectors.MONGO.client = await mongodb.MongoClient.connect('mongodb://localhost:27017/nodejs');
+  mongoose.Promise = global.Promise;
+  connectors.MONGO.client = await mongoose.connect('mongodb://localhost:27017/nodejs', { useMongoClient: true });
+};
+connectors.MONGO.disconnect = async () => {
+  connectors.MONGO.client.disconnect();
 };
 
 module.exports = connectors;
