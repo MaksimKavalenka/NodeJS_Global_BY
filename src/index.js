@@ -41,7 +41,7 @@ initPassport();
       await ReviewController.addReview('33', product._id, 'author33,', 'text33');
     });
 
-    app.listen(port, () => logger.info(util.format(__('server_listening'), 'App', port)));
+    app.listen(port, () => logger.info(util.format(locale('server_listening'), 'App', port)));
   } catch (err) {
     logger.error(err);
   }

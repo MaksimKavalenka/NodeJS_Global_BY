@@ -18,10 +18,10 @@ export class CityRouteUtils {
       if (city) {
         res.json(city);
       } else {
-        ExpressMiddleware.sendResponse(res, 404, util.format(__('city_not_found'), req.params.id));
+        ExpressMiddleware.sendResponse(res, 404, util.format(locale('city_not_found'), req.params.id));
       }
     } catch (error) {
-      ExpressMiddleware.sendResponse(res, 404, util.format(__('city_not_found'), req.params.id));
+      ExpressMiddleware.sendResponse(res, 404, util.format(locale('city_not_found'), req.params.id));
     }
   }
 
@@ -59,7 +59,7 @@ export class CredentialsRouteUtils {
       };
       ExpressMiddleware.sendResponse(res, 200, data);
     } else {
-      ExpressMiddleware.sendResponse(res, 403, __('auth_failure'));
+      ExpressMiddleware.sendResponse(res, 403, locale('auth_failure'));
     }
   }
 
@@ -86,7 +86,7 @@ export class ProductRouteUtils {
       );
       ExpressMiddleware.sendResponse(res, 200, product);
     } catch (err) {
-      ExpressMiddleware.sendResponse(res, 409, util.format(__('product_exists'), req.body.productId));
+      ExpressMiddleware.sendResponse(res, 409, util.format(locale('product_exists'), req.body.productId));
     }
   }
 
@@ -95,7 +95,7 @@ export class ProductRouteUtils {
     if (product) {
       res.json(product);
     } else {
-      ExpressMiddleware.sendResponse(res, 404, util.format(__('product_not_found'), req.params.id));
+      ExpressMiddleware.sendResponse(res, 404, util.format(locale('product_not_found'), req.params.id));
     }
   }
 

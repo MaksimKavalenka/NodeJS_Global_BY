@@ -15,10 +15,10 @@ export class ResponseHandler {
   static async mongoResponse(res, result, entity, id) {
     switch (result.n) {
       case 0:
-        ExpressMiddleware.sendResponse(res, 404, util.format(__(`${entity}_not_found`), id));
+        ExpressMiddleware.sendResponse(res, 404, util.format(locale(`${entity}_not_found`), id));
         break;
       case 1:
-        ExpressMiddleware.sendResponse(res, 200, util.format(__(`${entity}_deleted`), id));
+        ExpressMiddleware.sendResponse(res, 200, util.format(locale(`${entity}_deleted`), id));
         break;
       default:
         break;

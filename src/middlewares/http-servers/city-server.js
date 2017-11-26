@@ -12,5 +12,5 @@ export default function createCityServer(port) {
       'Content-Type': 'application/json',
     });
     res.end(JSON.stringify(city));
-  }).listen(port, () => logger.info(util.format(__('server_listening'), 'City', port)));
+  }).listen(port, () => logger.info(util.format(locale('server_listening'), 'City', port)));
 }

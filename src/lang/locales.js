@@ -6,6 +6,7 @@ export default function initLocale() {
     defaultLocale: 'en',
     directory: `${__dirname}/locales`,
     locales: ['en', 'ru'],
-    register: global,
+    register: i18n,
   });
+  global.locale = tag => i18n.__(tag);
 }

@@ -38,7 +38,7 @@ export default function initPassport() {
       const user = UserController.getUser(creds.userId);
       next(null, user);
     } else {
-      next(null, false, __('auth_failure'));
+      next(null, false, locale('auth_failure'));
     }
   }));
 

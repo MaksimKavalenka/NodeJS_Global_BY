@@ -6,7 +6,7 @@ export default class ArgUtils {
   static isArgsExist(args, printHelpMessageFunc) {
     const isArgsExist = (Object.keys(args).length > 1);
     if (!isArgsExist) {
-      logger.warn(__('no_args'));
+      logger.warn(locale('no_args'));
       printHelpMessageFunc();
     }
     return isArgsExist;
@@ -15,7 +15,7 @@ export default class ArgUtils {
   static isArgExists(args, key, printHelpMessageFunc) {
     const isArgExistsFlag = args[key];
     if (!isArgExistsFlag) {
-      logger.warn(util.format(__('no_arg'), key));
+      logger.warn(util.format(locale('no_arg'), key));
       printHelpMessageFunc();
     }
     return isArgExistsFlag;
@@ -25,7 +25,7 @@ export default class ArgUtils {
     const isArgNumberFlag = ArgUtils.isArgExists(args, key, printHelpMessageFunc);
     if (isArgNumberFlag) {
       if (!TypeUtils.isNumber(args[key])) {
-        logger.warn(util.format(__('only_number'), key));
+        logger.warn(util.format(locale('only_number'), key));
         return false;
       }
     }

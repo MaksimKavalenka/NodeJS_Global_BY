@@ -19,7 +19,7 @@ export default class JWT {
           }
         });
       } else {
-        ExpressMiddleware.sendResponse(res, 403, { error: __('no_token') });
+        ExpressMiddleware.sendResponse(res, 403, { error: locale('no_token') });
       }
     };
   }
