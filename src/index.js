@@ -11,7 +11,7 @@ initPassport();
 const createServer = async () => {
   try {
     await connect();
-    app.listen(port, () => logger.info(util.format(__('server_listening'), 'App', port)));
+    app.listen(port, () => logger.info(util.format(locale('server_listening'), 'App', port)));
   } catch (err) {
     logger.error(err);
   }

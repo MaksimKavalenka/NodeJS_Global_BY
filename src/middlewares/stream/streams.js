@@ -60,7 +60,7 @@ function readProductsIntoDatabase() {
           jsonContent.price.substr(1), jsonContent.isbn,
         );
       } catch (err) {
-        logger.info(util.format(__('product_exists'), jsonContent.id));
+        logger.info(util.format(locale('product_exists'), jsonContent.id));
       }
     }
     next();
@@ -84,7 +84,7 @@ export default class Streams {
     } else if (Object.prototype.hasOwnProperty.call(actionHandler, args.action)) {
       actionHandler[args.action].handler(args);
     } else if (args.action) {
-      logger.warn(util.format(__('wrong_action'), args.action));
+      logger.warn(util.format(locale('wrong_action'), args.action));
       Streams.printHelpMessage();
     } else {
       actionHandler.helper.handler(['action']);

@@ -15,5 +15,5 @@ export default function createHtmlServer(port) {
       'Content-Type': 'text/html',
     });
     fs.createReadStream(index).pipe(split()).pipe(replaceMessage()).pipe(res);
-  }).listen(port, () => logger.info(util.format(__('server_listening'), 'HTML', port)));
+  }).listen(port, () => logger.info(util.format(locale('server_listening'), 'HTML', port)));
 }
