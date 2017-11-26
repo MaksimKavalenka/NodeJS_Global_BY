@@ -1,5 +1,4 @@
 import http from 'http';
-import config from '../../config/config.json';
 import { logger } from '../../middlewares';
 
 const product = {
@@ -20,5 +19,5 @@ export default function createJsonServer(port) {
       'Content-Type': 'application/json',
     });
     res.end(JSON.stringify(product));
-  }).listen(port, () => logger.info(`JSON ${config.server_listening} ${port}`));
+  }).listen(port, () => logger.info(`JSON ${locale('server_listening')} ${port}`));
 }

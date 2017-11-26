@@ -1,5 +1,4 @@
 import minimist from 'minimist';
-import config from '../../config/config.json';
 import { ArgUtils } from '../../helpers';
 import { Streams, logger } from '../../middlewares';
 
@@ -12,7 +11,7 @@ export const args = minimist(process.argv.slice(2), {
     count: 'c',
   },
   unknown: (arg) => {
-    logger.error(config.unknown_option, arg);
+    logger.error(locale('unknown_option'), arg);
   },
 });
 
