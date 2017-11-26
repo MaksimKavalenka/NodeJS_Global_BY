@@ -15,7 +15,7 @@ export class CredentialsRouteUtils {
       };
       ExpressMiddleware.sendResponse(res, 200, data);
     } else {
-      ExpressMiddleware.sendResponse(res, 403, { error: __('auth_failure') });
+      ExpressMiddleware.sendResponse(res, 403, { error: locale('auth_failure') });
     }
   }
 
@@ -53,7 +53,7 @@ export class ProductRouteUtils {
     if (req.product) {
       res.json(req.product);
     } else {
-      ExpressMiddleware.sendResponse(res, 404, { error: `${__('product_not_found')}: ${req.params.id}` });
+      ExpressMiddleware.sendResponse(res, 404, { error: `${locale('product_not_found')}: ${req.params.id}` });
     }
   }
 }

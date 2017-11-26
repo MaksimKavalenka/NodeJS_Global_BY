@@ -1,9 +1,10 @@
 {
   "extends": "airbnb-base",
   "globals": {
-    "__": false
+    "locale": false
   },
   "rules": {
-    "linebreak-style": ["error", "windows"]
+    "linebreak-style": ["error", "windows"],
+    "no-underscore-dangle": ["error", { "allow": ["__"] }]
   }
 }

@@ -58,7 +58,7 @@ export default class Streams {
     } else if (Object.prototype.hasOwnProperty.call(actionHandler, args.action)) {
       actionHandler[args.action].handler(args);
     } else if (args.action) {
-      logger.warn(`'${args.action}' ${__('wrong_action')}`);
+      logger.warn(`'${args.action}' ${locale('wrong_action')}`);
       Streams.printHelpMessage();
     } else {
       actionHandler.helper.handler(['action']);

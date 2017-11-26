@@ -11,7 +11,7 @@ export const args = minimist(process.argv.slice(2), {
     count: 'c',
   },
   unknown: (arg) => {
-    logger.error(__('unknown_option'), arg);
+    logger.error(locale('unknown_option'), arg);
   },
 });
 

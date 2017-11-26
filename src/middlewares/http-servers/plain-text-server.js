@@ -7,5 +7,5 @@ export default function createPlainTextServer(port) {
       'Content-Type': 'text/plain',
     });
     res.end('Hello World');
-  }).listen(port, () => logger.info(`Plain text ${__('server_listening')} ${port}`));
+  }).listen(port, () => logger.info(`Plain text ${locale('server_listening')} ${port}`));
 }
