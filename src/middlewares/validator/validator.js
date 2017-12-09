@@ -31,7 +31,7 @@ export class Validator {
             path: error.dataPath,
             message: error.message,
           }));
-        ExpressMiddleware.sendResponse(res, 400, { error: errors });
+        ExpressMiddleware.sendResponse(res, 400, errors);
       } else {
         next();
       }

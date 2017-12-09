@@ -21,7 +21,7 @@ router.route(path.GET_CITIES)
   .get(CityRouteUtils.getCities);
 
 router.route(path.UPDATE_CITY)
-  .put(CityRouteUtils.updateCity);
+  .put(Validator.validateSchema(schema.CITY_SCHEMA), CityRouteUtils.updateCity);
 
 router.route(path.DELETE_CITY)
   .delete(CityRouteUtils.deleteCity);

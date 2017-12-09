@@ -16,7 +16,7 @@ export class CityRouteUtils {
     try {
       const city = await CityController.getCity(req.params.id);
       if (city) {
-        res.json(city);
+        ExpressMiddleware.sendResponse(res, 200, city);
       } else {
         ExpressMiddleware.sendResponse(res, 404, util.format(locale('city_not_found'), req.params.id));
       }
@@ -27,7 +27,7 @@ export class CityRouteUtils {
 
   static async getCities(req, res) {
     const cities = await CityController.getCities();
-    res.json(cities);
+    ExpressMiddleware.sendResponse(res, 200, cities);
   }
 
   static async updateCity(req, res) {
@@ -81,19 +81,19 @@ export class ProductRouteUtils {
   static async addProduct(req, res) {
     try {
       const product = await ProductController.addProduct(
-        req.body.productId, req.body.name, req.body.brand,
+        req.body._id, req.body.name, req.body.brand,
         req.body.company, req.body.price, req.body.isbn,
       );
       ExpressMiddleware.sendResponse(res, 200, product);
     } catch (err) {
-      ExpressMiddleware.sendResponse(res, 409, util.format(locale('product_exists'), req.body.productId));
+      ExpressMiddleware.sendResponse(res, 409, util.format(locale('product_exists'), req.body._id));
     }
   }
 
   static async getProduct(req, res) {
     const product = await ProductController.getProduct(req.params.id);
     if (product) {
-      res.json(product);
+      ExpressMiddleware.sendResponse(res, 200, product);
     } else {
       ExpressMiddleware.sendResponse(res, 404, util.format(locale('product_not_found'), req.params.id));
     }
@@ -101,7 +101,7 @@ export class ProductRouteUtils {
 
   static async getProducts(req, res) {
     const products = await ProductController.getProducts();
-    res.json(products);
+    ExpressMiddleware.sendResponse(res, 200, products);
   }
 
   static async deleteProduct(req, res) {
@@ -113,14 +113,14 @@ export class ProductRouteUtils {
 export class ReviewRouteUtils {
   static async getProductReviews(req, res) {
     const reviews = await ReviewController.getProductReviews(req.params.id);
-    res.json(reviews);
+    ExpressMiddleware.sendResponse(res, 200, reviews);
   }
 }
 
 export class UserRouteUtils {
   static async getUsers(req, res) {
     const users = await UserController.getUsers();
-    res.json(users);
+    ExpressMiddleware.sendResponse(res, 200, users);
   }
 
   static async deleteUser(req, res) {

@@ -2,7 +2,7 @@
   "title": "Product Schema",
   "type": "object",
   "properties": {
-    "productId": {
+    "_id": {
       "type": "string"
     },
     "name": {
@@ -22,5 +22,5 @@
       "type": "string"
     }
   },
-  "required": ["productId", "name", "brand", "company", "price", "isbn"]
+  "required": ["_id", "name", "brand", "company", "price", "isbn"]
 }

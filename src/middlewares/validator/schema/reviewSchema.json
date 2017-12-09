@@ -2,7 +2,7 @@
   "title": "Review Schema",
   "type": "object",
   "properties": {
-    "reviewId": {
+    "_id": {
       "type": "string"
     },
     "productId": {
@@ -15,5 +15,5 @@
       "type": "string"
     }
   },
-  "required": ["reviewId", "productId", "author", "text"]
+  "required": ["_id", "productId", "author", "text"]
 }
