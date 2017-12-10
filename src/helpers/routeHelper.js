@@ -66,7 +66,7 @@ export class CredentialsRouteUtils {
   static verifyCredentialsPassport(req, res) {
     const data = {
       user: req.user,
-      token: JWT.generateJwt(req.user),
+      token: JWT.generateJwt(req.user.toJSON()),
     };
     ExpressMiddleware.sendResponse(res, 200, data);
   }

@@ -32,10 +32,10 @@ export default function initPassport() {
     usernameField: 'login',
     passwordField: 'password',
     session: false,
-  }, (login, password, next) => {
-    const creds = CredentialsController.verifyCredentials(login, password);
+  }, async (login, password, next) => {
+    const creds = await CredentialsController.verifyCredentials(login, password);
     if (creds) {
-      const user = UserController.getUser(creds.userId);
+      const user = await UserController.getUser(creds._id);
       next(null, user);
     } else {
       next(null, false, locale('auth_failure'));
