@@ -1,0 +1,988 @@
+---
+swagger: "2.0"
+info:
+  description: "This documentation provides information about all the available endpoints.\n"
+  version: "1.0.0"
+  title: "NodeJS API"
+  contact:
+    email: "maksim.kavalenka@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8090"
+basePath: "/api"
+tags:
+- name: "auth"
+  description: "Authentication operations"
+- name: "city"
+  description: "Operations about cities"
+- name: "product"
+  description: "Operations about products"
+- name: "review"
+  description: "Operations about reviews"
+- name: "user"
+  description: "Operations about users"
+schemes:
+- "http"
+paths:
+  /auth:
+    x-swagger-router-controller: auth
+    post:
+      tags:
+      - "auth"
+      summary: "Get token"
+      operationId: "getToken"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Token that will be used to authenticate user"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AuthResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequestResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+  /auth/passport:
+    x-swagger-router-controller: auth
+    post:
+      tags:
+      - "auth"
+      summary: "Get token"
+      operationId: "getTokenPassport"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Token that will be used to authenticate user"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AuthResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequestResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+  /auth/passport/facebook:
+    x-swagger-router-controller: auth
+    get:
+      tags:
+      - "auth"
+      summary: "Facebook authorization"
+      operationId: "facebookPassport"
+      produces:
+      - "text/html"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+  /auth/passport/facebook/callback:
+    get:
+      tags:
+      - "auth"
+      summary: "Facebook callback authorization"
+      operationId: "facebookPassportCallback"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OKResponse"
+  /auth/passport/google:
+    x-swagger-router-controller: auth
+    get:
+      tags:
+      - "auth"
+      summary: "Google authorization"
+      operationId: "googlePassport"
+      produces:
+      - "text/html"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+  /auth/passport/google/callback:
+    get:
+      tags:
+      - "auth"
+      summary: "Google callback authorization"
+      operationId: "googlePassportCallback"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OKResponse"
+  /auth/passport/twitter:
+    x-swagger-router-controller: auth
+    get:
+      tags:
+      - "auth"
+      summary: "Twitter authorization"
+      operationId: "twitterPassport"
+      produces:
+      - "text/html"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+  /auth/passport/twitter/callback:
+    get:
+      tags:
+      - "auth"
+      summary: "Twitter callback authorization"
+      operationId: "twitterPassportCallback"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OKResponse"
+  /cities:
+    x-swagger-router-controller: city
+    get:
+      tags:
+      - "city"
+      summary: "Get cities"
+      operationId: "getCities"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CitiesResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+    post:
+      tags:
+      - "city"
+      summary: "Add city"
+      operationId: "addCity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "City object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/CityRequest"
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CityResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequestResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+  /cities/{id}:
+    x-swagger-router-controller: city
+    get:
+      tags:
+      - "city"
+      summary: "Get city"
+      operationId: "getCity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of city to return"
+        required: true
+        type: "string"
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CityResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/NotFoundResponse"
+    put:
+      tags:
+      - "city"
+      summary: "Update city"
+      operationId: "updateCity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of city to update"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "City object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/CityRequest"
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CityResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequestResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+    delete:
+      tags:
+      - "city"
+      summary: "Delete city"
+      operationId: "deleteCity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of city to delete"
+        required: true
+        type: "string"
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OKResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/NotFoundResponse"
+  /products:
+    x-swagger-router-controller: product
+    get:
+      tags:
+      - "product"
+      summary: "Get products"
+      operationId: "getProducts"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ProductsResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+    post:
+      tags:
+      - "product"
+      summary: "Add product"
+      operationId: "addProduct"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Product object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/ProductRequest"
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ProductResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequestResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+  /products/{id}:
+    x-swagger-router-controller: product
+    get:
+      tags:
+      - "product"
+      summary: "Get product"
+      operationId: "getProduct"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of product to return"
+        required: true
+        type: "string"
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ProductResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/NotFoundResponse"
+    delete:
+      tags:
+      - "product"
+      summary: "Delete product"
+      operationId: "deleteProduct"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of product to delete"
+        required: true
+        type: "string"
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OKResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/NotFoundResponse"
+  /products/{id}/reviews:
+    x-swagger-router-controller: product
+    get:
+      tags:
+      - "review"
+      summary: "Get product's reviews"
+      operationId: "getProductReviews"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of product to return reviews for"
+        required: true
+        type: "string"
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ReviewsResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+  /users:
+    x-swagger-router-controller: user
+    get:
+      tags:
+      - "user"
+      summary: "Get users"
+      operationId: "getUsers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UsersResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+  /users/{id}:
+    x-swagger-router-controller: user
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      operationId: "deleteUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of user to delete"
+        required: true
+        type: "string"
+      - name: "x-access-token"
+        in: "header"
+        description: "Authorization header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OKResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/NotFoundResponse"
+definitions:
+  AuthRequest:
+    type: "object"
+    required:
+    - "login"
+    - "password"
+    properties:
+      login:
+        type: "string"
+        example: "admin"
+      password:
+        type: "string"
+        example: "123qwe"
+    example:
+      password: "123qwe"
+      login: "admin"
+  AuthResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 200
+      message:
+        type: "string"
+        example: "OK"
+      data:
+        $ref: "#/definitions/AuthResponse_data"
+    example:
+      code: 200
+      data:
+        user:
+          name: "Maks"
+          _id: "5a14bd88571f2c1b1c28ed6f"
+          email: "admin@node.com"
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTE0YmQ5OTU3MWYyYzFiMWMyOGVkNzEiLCJuYW1lIjoiTWFrcyIsImVtYWlsIjoiYWRtaW5Abm9kZS5jb20iLCJpYXQiOjE1MTI5MDY1NzcsImV4cCI6MTUxMjkwNzE3N30.ZVb6sj_ZOpVJnhS6QbnjXu3f_Ia6SZTpO_n5oCAPWlo"
+      message: "OK"
+  City:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+        example: "5a14bd99571f2c1b1c28ed6f"
+      name:
+        type: "string"
+        example: "Gomel"
+      country:
+        type: "string"
+        example: "Belarus"
+      capital:
+        type: "boolean"
+        example: false
+      location:
+        $ref: "#/definitions/City_location"
+    example:
+      country: "Belarus"
+      capital: false
+      name: "Gomel"
+      location:
+        lat: 52.26299999999999812416717759333550930023193359375
+        long: 30.589999999999999857891452847979962825775146484375
+      _id: "5a14bd99571f2c1b1c28ed6f"
+  CityRequest:
+    type: "object"
+    required:
+    - "capital"
+    - "country"
+    - "lat"
+    - "long"
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "Gomel"
+      country:
+        type: "string"
+        example: "Belarus"
+      capital:
+        type: "boolean"
+        example: false
+      lat:
+        type: "number"
+        example: 52.26299999999999812416717759333550930023193359375
+      long:
+        type: "number"
+        example: 30.589999999999999857891452847979962825775146484375
+    example:
+      country: "Belarus"
+      capital: false
+      name: "Gomel"
+      lat: 52.26299999999999812416717759333550930023193359375
+      long: 30.589999999999999857891452847979962825775146484375
+  CityResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 200
+      message:
+        type: "string"
+        example: "OK"
+      data:
+        $ref: "#/definitions/City"
+    example:
+      code: 200
+      data:
+        country: "Belarus"
+        capital: false
+        name: "Gomel"
+        location:
+          lat: 52.26299999999999812416717759333550930023193359375
+          long: 30.589999999999999857891452847979962825775146484375
+        _id: "5a14bd99571f2c1b1c28ed6f"
+      message: "OK"
+  CitiesResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 200
+      message:
+        type: "string"
+        example: "OK"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/City"
+    example:
+      code: 200
+      data:
+      - country: "Belarus"
+        capital: false
+        name: "Gomel"
+        location:
+          lat: 52.26299999999999812416717759333550930023193359375
+          long: 30.589999999999999857891452847979962825775146484375
+        _id: "5a14bd99571f2c1b1c28ed6f"
+      - country: "Belarus"
+        capital: false
+        name: "Gomel"
+        location:
+          lat: 52.26299999999999812416717759333550930023193359375
+          long: 30.589999999999999857891452847979962825775146484375
+        _id: "5a14bd99571f2c1b1c28ed6f"
+      message: "OK"
+  Product:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+        example: "1f"
+      name:
+        type: "string"
+        example: "Hat"
+      brand:
+        type: "string"
+        example: "HatBrand"
+      company:
+        type: "string"
+        example: "HatCompany"
+      price:
+        type: "number"
+        example: 189.990000000000009094947017729282379150390625
+      isbn:
+        type: "string"
+        example: "3-736-11294-8"
+    example:
+      price: 189.990000000000009094947017729282379150390625
+      isbn: "3-736-11294-8"
+      name: "Hat"
+      company: false
+      _id: "1f"
+      brand: "HatBrand"
+  ProductRequest:
+    type: "object"
+    required:
+    - "_id"
+    - "brand"
+    - "company"
+    - "isbn"
+    - "name"
+    - "price"
+    properties:
+      _id:
+        type: "string"
+        example: "1f"
+      name:
+        type: "string"
+        example: "Hat"
+      brand:
+        type: "string"
+        example: "HatBrand"
+      company:
+        type: "string"
+        example: "HatCompany"
+      price:
+        type: "number"
+        example: 189.990000000000009094947017729282379150390625
+      isbn:
+        type: "string"
+        example: "3-736-11294-8"
+    example:
+      price: 189.990000000000009094947017729282379150390625
+      isbn: "3-736-11294-8"
+      name: "Hat"
+      company: false
+      _id: "1f"
+      brand: "HatBrand"
+  ProductResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 200
+      message:
+        type: "string"
+        example: "OK"
+      data:
+        $ref: "#/definitions/Product"
+    example:
+      code: 200
+      data:
+        price: 189.990000000000009094947017729282379150390625
+        isbn: "3-736-11294-8"
+        name: "Hat"
+        company: "HatCompany"
+        _id: "1f"
+        brand: "HatBrand"
+      message: "OK"
+  ProductsResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 200
+      message:
+        type: "string"
+        example: "OK"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/Product"
+    example:
+      code: 200
+      data:
+      - price: 189.990000000000009094947017729282379150390625
+        isbn: "3-736-11294-8"
+        name: "Hat"
+        company: "HatCompany"
+        _id: "1f"
+        brand: "HatBrand"
+      - price: 189.990000000000009094947017729282379150390625
+        isbn: "3-736-11294-8"
+        name: "Hat"
+        company: "HatCompany"
+        _id: "1f"
+        brand: "HatBrand"
+      message: "OK"
+  Review:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+        example: "8d"
+      productId:
+        type: "string"
+        example: "1f"
+      author:
+        type: "string"
+        example: "Sam"
+      text:
+        type: "string"
+        example: "Product is gorgeous"
+    example:
+      productId: "1f"
+      author: "Sam"
+      _id: "8d"
+      text: "Product is gorgeous"
+  ReviewsResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 200
+      message:
+        type: "string"
+        example: "OK"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/Review"
+    example:
+      code: 200
+      data:
+      - productId: "1f"
+        author: "Sam"
+        _id: "8d"
+        text: "Product is gorgeous"
+      - productId: "1f"
+        author: "Sam"
+        _id: "8d"
+        text: "Product is gorgeous"
+      message: "OK"
+  User:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+        example: "5a14bd88571f2c1b1c28ed6f"
+      name:
+        type: "string"
+        example: "Maks"
+      email:
+        type: "string"
+        example: "admin@node.com"
+    example:
+      name: "Maks"
+      _id: "5a14bd88571f2c1b1c28ed6f"
+      email: "admin@node.com"
+  UsersResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 200
+      message:
+        type: "string"
+        example: "OK"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/User"
+    example:
+      code: 200
+      data:
+      - name: "Maks"
+        _id: "5a14bd88571f2c1b1c28ed6f"
+        email: "admin@node.com"
+      - name: "Maks"
+        _id: "5a14bd88571f2c1b1c28ed6f"
+        email: "admin@node.com"
+      message: "OK"
+  OKResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 200
+      message:
+        type: "string"
+        example: "OK"
+      data:
+        type: "string"
+        example: "Success"
+    example:
+      code: 200
+      data: "Success"
+      message: "OK"
+  BadRequestResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 400
+      message:
+        type: "string"
+        example: "Bad Request"
+      error:
+        type: "array"
+        items:
+          $ref: "#/definitions/BadRequestResponse_error"
+  ForbiddenResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 403
+      message:
+        type: "string"
+        example: "Forbidden"
+      error:
+        $ref: "#/definitions/ForbiddenResponse_error"
+  NotFoundResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 404
+      message:
+        type: "string"
+        example: "Not Found"
+      error:
+        type: "string"
+        example: "Data are not found"
+  AuthResponse_data:
+    properties:
+      user:
+        $ref: "#/definitions/User"
+      token:
+        type: "string"
+        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTE0YmQ5OTU3MWYyYzFiMWMyOGVkNzEiLCJuYW1lIjoiTWFrcyIsImVtYWlsIjoiYWRtaW5Abm9kZS5jb20iLCJpYXQiOjE1MTI5MDY1NzcsImV4cCI6MTUxMjkwNzE3N30.ZVb6sj_ZOpVJnhS6QbnjXu3f_Ia6SZTpO_n5oCAPWlo"
+    example:
+      user:
+        name: "Maks"
+        _id: "5a14bd88571f2c1b1c28ed6f"
+        email: "admin@node.com"
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTE0YmQ5OTU3MWYyYzFiMWMyOGVkNzEiLCJuYW1lIjoiTWFrcyIsImVtYWlsIjoiYWRtaW5Abm9kZS5jb20iLCJpYXQiOjE1MTI5MDY1NzcsImV4cCI6MTUxMjkwNzE3N30.ZVb6sj_ZOpVJnhS6QbnjXu3f_Ia6SZTpO_n5oCAPWlo"
+  City_location:
+    properties:
+      lat:
+        type: "number"
+        example: 52.26299999999999812416717759333550930023193359375
+      long:
+        type: "number"
+        example: 30.589999999999999857891452847979962825775146484375
+    example:
+      lat: 52.26299999999999812416717759333550930023193359375
+      long: 30.589999999999999857891452847979962825775146484375
+  BadRequestResponse_error:
+    properties:
+      path:
+        type: "string"
+        example: "attribute"
+      message:
+        type: "string"
+        example: "attribute is required"
+  ForbiddenResponse_error:
+    properties:
+      message:
+        type: "string"
+        example: "No token provided / invalid signature / jwt expired / Login or password\
+          \ is wrong"
