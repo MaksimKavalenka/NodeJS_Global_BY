@@ -4,14 +4,14 @@ import { ExpressMiddleware } from '../middlewares';
 
 export default class JWT {
   static generateJwt(payload) {
-    return jwt.sign(payload.toString(), config.secret, { expiresIn: config.expiration_time });
+    return jwt.sign(payload, config.secret, { expiresIn: config.expiration_time });
   }
 
   static verifyJwt() {
     return (req, res, next) => {
       const token = req.headers['x-access-token'];
       if (token) {
-        jwt.verify(token, config.secret, (error, decoded) => {
+        jwt.verify(token, config.secret, (error) => {
           if (error) {
             ExpressMiddleware.sendResponse(res, 400, error);
           } else {

@@ -1,24 +1,23 @@
-import _ from 'lodash';
-import { Credentials } from '../models';
+import sequelize from 'sequelize';
+import Credentials from '../database/models/credentials';
+import { client } from '../middlewares';
 
-const credentials = [];
+const credentialsModel = Credentials(client, sequelize.DataTypes);
 
 export default class CredentialsController {
   static addCredentials(userId, login, password) {
-    const creds = new Credentials(userId, login, password);
-    credentials.push(creds);
-    return creds;
+    return credentialsModel.create({ userId, login, password });
   }
 
-  static getCredentialsById(id) {
-    return _.find(credentials, creds => (creds.userId === id));
+  static getCredentialsByUserId(userId) {
+    return credentialsModel.find({ where: { userId } });
   }
 
   static verifyCredentials(login, password) {
-    return _.find(credentials, creds => ((creds.login === login) && (creds.password === password)));
+    return credentialsModel.find({ where: { login, password } });
   }
 
   static getCredentials() {
-    return credentials;
+    return credentialsModel.findAll();
   }
 }

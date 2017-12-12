@@ -2,7 +2,7 @@
     Usage: node dist/middlewares/stream/streams.js [--help] [--action=(action) [--file=(filePath)] [--path=(dirPath)] [--count=(count)]]
 
     where (action) is one of:
-        io, transform, transform_file, transform_save_file, bundle_css, create_file
+        io, transform, transform_file, transform_save_file, read_products, bundle_css, create_file
 
 
 
@@ -12,16 +12,19 @@
     transform              Transforms the process.stdin to upper case and pipes it to the process.stdout
     Usage:                 node dist/middlewares/stream/streams.js -a transform
 
-    transform-file         Transforms a file from CSV format to JSON format and pipes it to the process.stdout
+    transform_file         Transforms a file from CSV format to JSON format and pipes it to the process.stdout
     Usage:                 node dist/middlewares/stream/streams.js -a transform_file -f {filePath}
 
-    transform-save-file    Transforms a file from CSV format to JSON format and saves it
+    transform_save_file    Transforms a file from CSV format to JSON format and saves it
     Usage:                 node dist/middlewares/stream/streams.js -a transform_save_file -f {filePath}
 
-    bundle-css             babel-Concats a bunch of CSS files into a one file
+    read_products          Reads products from a file of CSV format into a database
+    Usage:                 node dist/middlewares/stream/streams.js -a read_products -f {filePath}
+
+    bundle_css             babel-Concats a bunch of CSS files into a one file
     Usage:                 node dist/middlewares/stream/streams.js -a bundle_css -p {dirPath}
 
-    create-file            Creates file that is filled with the common structured data
+    create_file            Creates file that is filled with the common structured data
     Usage:                 node dist/middlewares/stream/streams.js -a create_file -f {filePath} -c {count}
 
 

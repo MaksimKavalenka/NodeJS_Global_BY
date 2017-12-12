@@ -5,11 +5,13 @@ import request from 'request';
 import split from 'split';
 import through from 'through2';
 import throughMap from 'through2-map';
-import { promisify } from 'util';
-import { ArgUtils, FileUtils, StreamUtils } from '../../helpers';
-import { args, actionHandler, logger } from '../../middlewares';
+import util from 'util';
+import { ProductController } from '../../controllers';
+import { ArgUtils, FileUtils, StreamUtils, TypeUtils } from '../../helpers';
+import initLocale from '../../lang';
+import { args, actionHandler, connect, disconnect, logger } from '../../middlewares';
 
-const globAsync = promisify(glob);
+const globAsync = util.promisify(glob);
 const streamUpperCase = throughMap(buffer => buffer.toString().toUpperCase());
 
 function csvToJson() {
@@ -23,13 +25,7 @@ function csvToJson() {
       parseHeader = false;
       this.push('[');
     } else if (buffer.toString().length > 0) {
-      const rawContent = buffer.toString().split(',');
-      const jsonContent = {};
-
-      headers.forEach((header, index) => {
-        jsonContent[header] = rawContent[index];
-      });
-
+      const jsonContent = TypeUtils.csvToJson(headers, buffer);
       if (firstChunk) {
         firstChunk = false;
         this.push(JSON.stringify(jsonContent));
@@ -48,6 +44,36 @@ function csvToJson() {
   return through.obj(bodyFunc, endFunc);
 }
 
+function readProductsIntoDatabase() {
+  let headers = [];
+  let parseHeader = true;
+
+  const bodyFunc = async function body(buffer, encoding, next) {
+    if (parseHeader) {
+      headers = buffer.toString().split(',');
+      parseHeader = false;
+    } else if (buffer.toString().length > 0) {
+      const jsonContent = TypeUtils.csvToJson(headers, buffer);
+      try {
+        await ProductController.addProduct(
+          jsonContent.id, jsonContent.name, jsonContent.brand, jsonContent.company,
+          jsonContent.price.substr(1), jsonContent.isbn,
+        );
+      } catch (err) {
+        logger.info(util.format(locale('product_exists'), jsonContent.id));
+      }
+    }
+    next();
+  };
+
+  const endFunc = async function end(next) {
+    await disconnect();
+    next();
+  };
+
+  return through.obj(bodyFunc, endFunc);
+}
+
 export default class Streams {
   static run() {
     if (!ArgUtils.isArgsExist(args, Streams.printHelpMessage)) {
@@ -58,7 +84,7 @@ export default class Streams {
     } else if (Object.prototype.hasOwnProperty.call(actionHandler, args.action)) {
       actionHandler[args.action].handler(args);
     } else if (args.action) {
-      logger.warn(`'${args.action}' ${locale('wrong_action')}`);
+      logger.warn(util.format(locale('wrong_action'), args.action));
       Streams.printHelpMessage();
     } else {
       actionHandler.helper.handler(['action']);
@@ -86,6 +112,13 @@ export default class Streams {
       const outputPath = `${filePath.substr(0, filePath.lastIndexOf('.'))}.json`;
       fs.createReadStream(filePath).pipe(split()).pipe(csvToJson())
         .pipe(fs.createWriteStream(outputPath));
+    }
+  }
+
+  static async readProducts(filePath) {
+    if (FileUtils.isFileCsv(filePath)) {
+      await connect();
+      fs.createReadStream(filePath).pipe(split()).pipe(readProductsIntoDatabase());
     }
   }
 
@@ -130,5 +163,6 @@ export default class Streams {
 }
 
 if (require.main === module) {
+  initLocale();
   Streams.run();
 }

@@ -51,6 +51,14 @@ export const actionHandler = {
     },
   },
 
+  read_products: {
+    handler: () => {
+      if (actionHandler.helper.handler(['file'])) {
+        Streams.readProducts(args.file);
+      }
+    },
+  },
+
   bundle_css: {
     handler: () => {
       if (actionHandler.helper.handler(['path'])) {
