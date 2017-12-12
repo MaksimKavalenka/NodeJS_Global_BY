@@ -20,6 +20,10 @@ productSchema.pre('update', function (next) {
   this.update({}, { $set: { lastModifiedDate: new Date() } });
   next();
 });
+productSchema.pre('remove', function (next) {
+  this.model.Review.remove({ productId: this._id });
+  next();
+});
 
 const Product = mongoose.model('Product', productSchema);
 
