@@ -30,7 +30,7 @@ connectors.MONGO.connect = async () => {
   connectors.MONGO.client = await mongoose.connect('mongodb://localhost:27017/nodejs', { useMongoClient: true });
 };
 connectors.MONGO.disconnect = async () => {
-  connectors.MONGO.client.disconnect();
+  mongoose.disconnect();
 };
 
 module.exports = connectors;

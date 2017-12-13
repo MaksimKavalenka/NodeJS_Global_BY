@@ -1,4 +1,4 @@
-import { Product } from '../models';
+import { Product, Review } from '../models';
 
 export default class ProductController {
   static addProduct(_id, name, brand, company, price, isbn) {
@@ -16,7 +16,8 @@ export default class ProductController {
     return Product.find();
   }
 
-  static deleteProduct(_id) {
+  static async deleteProduct(_id) {
+    await Review.remove({ productId: _id });
     return Product.remove({ _id });
   }
 }
