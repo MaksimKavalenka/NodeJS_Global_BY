@@ -41,8 +41,6 @@
     "sequelize": "^4.27.0",
     "sequelize-cli": "^3.2.0",
     "split": "^1.0.1",
-    "swagger": "^0.7.5",
-    "swagger-editor": "^3.1.19",
     "through2": "^2.0.3",
     "through2-map": "^3.0.0",
     "winston": "^2.4.0"
