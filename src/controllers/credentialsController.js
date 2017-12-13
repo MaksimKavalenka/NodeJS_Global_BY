@@ -1,23 +1,16 @@
-import sequelize from 'sequelize';
-import Credentials from '../database/models/credentials';
-import { client } from '../middlewares';
-
-const credentialsModel = Credentials(client, sequelize.DataTypes);
+import { Credentials } from '../models';
 
 export default class CredentialsController {
   static addCredentials(userId, login, password) {
-    return credentialsModel.create({ userId, login, password });
+    const credentials = new Credentials({ _id: userId, login, password });
+    return credentials.save();
   }
 
-  static getCredentialsByUserId(userId) {
-    return credentialsModel.find({ where: { userId } });
+  static deleteCredentials(_id) {
+    return Credentials.remove({ _id });
   }
 
   static verifyCredentials(login, password) {
-    return credentialsModel.find({ where: { login, password } });
-  }
-
-  static getCredentials() {
-    return credentialsModel.findAll();
+    return Credentials.findOne({ login, password });
   }
 }

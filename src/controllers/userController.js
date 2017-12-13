@@ -1,19 +1,20 @@
-import sequelize from 'sequelize';
-import User from '../database/models/user';
-import { client } from '../middlewares';
-
-const userModel = User(client, sequelize.DataTypes);
+import { User } from '../models';
 
 export default class UserController {
   static addUser(name, email) {
-    return userModel.create({ name, email });
+    const user = new User({ name, email });
+    return user.save();
   }
 
-  static getUserById(id) {
-    return userModel.find({ where: { id } });
+  static getUser(_id) {
+    return User.findOne({ _id });
   }
 
   static getUsers() {
-    return userModel.findAll();
+    return User.find();
+  }
+
+  static deleteUser(_id) {
+    return User.remove({ _id });
   }
 }

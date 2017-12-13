@@ -5,13 +5,10 @@
     "name": {
       "type": "string"
     },
-    "age": {
-      "type": "number",
-      "minimum": 0
-    },
-    "city": {
-      "type": "string"
+    "email": {
+      "type": "string",
+      "format": "email"
     }
   },
-  "required": ["name", "age", "city"]
+  "required": ["name", "email"]
 }

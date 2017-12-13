@@ -1,11 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var review = sequelize.define('review', {
-    reviewId: {
+    id: {
       primaryKey: true,
       type: DataTypes.STRING
     },
-    productid: DataTypes.STRING,
+    productId: DataTypes.STRING,
     author: DataTypes.STRING,
     text: DataTypes.TEXT
   }, {

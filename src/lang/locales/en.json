@@ -1,15 +1,20 @@
 {
   "app_name": "NodeMP HW App",
   "auth_failure": "Login or password is wrong",
+  "city_deleted": "City with id %s has been deleted successfully",
+  "city_not_found": "City with id %s is not found",
   "file_not_found": "File is not found",
   "no_args": "Arguments should be specified",
   "no_arg": "%s argument should be specified",
   "no_token": "No token provided",
   "only_number": "%s argument should be a number",
   "product_exists": "Product with id %s already exists",
+  "product_deleted": "Product with id %s has been deleted successfully",
   "product_not_found": "Product with id %s is not found",
   "server_listening": "%s server is listening on port %d",
   "unknown_option": "Unknown option",
+  "user_deleted": "User with id %s has been deleted successfully",
+  "user_not_found": "User with id %s is not found",
   "wrong_action": "%s action is not found",
   "wrong_ext": "Wrong file extention"
 }

@@ -1,15 +1,20 @@
 {
   "app_name": "NodeMP HW App",
   "auth_failure": "Логин или пароль неверен",
+  "city_deleted": "Город с id %s был удалён успешно",
+  "city_not_found": "Город с id %s не найден",
   "file_not_found": "Файл не найден",
   "no_args": "Аргументы должны быть определены",
   "no_arg": "%s аргумент должны быть определён",
   "no_token": "Токен не предоставлен",
   "only_number": "%s аргумент должны быть числом",
   "product_exists": "Продукт с id %s уже существует",
+  "product_deleted": "Продукт с id %s был удалён успешно",
   "product_not_found": "Продукт с id %s не найден",
   "server_listening": "%s сервер прослушивает порт %d",
   "unknown_option": "Неизвестная опция",
+  "user_deleted": "Пользователь с id %s был удалён успешно",
+  "user_not_found": "Пользователь с id %s не найден",
   "wrong_action": "%s действие не найдено",
   "wrong_ext": "Неверное расширение файла"
 }

@@ -13,13 +13,13 @@ export default class JWT {
       if (token) {
         jwt.verify(token, config.secret, (error) => {
           if (error) {
-            ExpressMiddleware.sendResponse(res, 400, error);
+            ExpressMiddleware.sendResponse(res, 403, error);
           } else {
             next();
           }
         });
       } else {
-        ExpressMiddleware.sendResponse(res, 403, { error: locale('no_token') });
+        ExpressMiddleware.sendResponse(res, 403, { message: locale('no_token') });
       }
     };
   }

@@ -2,21 +2,15 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('reviews', {
-      reviewId: {
+      id: {
         allowNull: false,
         autoIncrement: false,
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
         primaryKey: true,
         type: Sequelize.STRING,
         unique: true
       },
       productId: {
         allowNull: false,
-        references: {
-          model: 'products',
-          key: 'id'
-        },
         type: Sequelize.STRING
       },
       author: {

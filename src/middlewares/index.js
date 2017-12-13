@@ -1,3 +1,4 @@
+export { default as connectors } from './connectors';
 export { default as DirWatcher } from './dirwatcher';
 export { default as ExpressMiddleware } from './expressMiddleware';
 export * from './http-servers';
@@ -5,6 +6,5 @@ export { default as Importer } from './importer';
 export { default as JWT } from './jwt';
 export { default as logger } from './log';
 export { default as initPassport } from './passport';
-export { client, connect, disconnect } from './postgres';
 export * from './stream';
 export * from './validator';

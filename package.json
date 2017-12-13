@@ -9,6 +9,7 @@
     "db-migrate": "sequelize db:migrate",
     "db-seed": "sequelize db:seed:all",
     "lint": "eslint src",
+    "mongo-init": "babel-node src/bin/mongoInit.js",
     "start": "nodemon src/index.js --exec babel-node"
   },
   "dependencies": {
@@ -26,6 +27,8 @@
     "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",
+    "mongodb": "^2.2.33",
+    "mongoose": "^4.13.4",
     "nodemon": "^1.12.1",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",

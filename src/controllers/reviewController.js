@@ -1,25 +1,22 @@
-import sequelize from 'sequelize';
-import Review from '../database/models/review';
-import { client } from '../middlewares';
-
-const reviewModel = Review(client, sequelize.DataTypes);
+import { Review } from '../models';
 
 export default class ReviewController {
-  static addReview(reviewId, productId, author, text) {
-    return reviewModel.create({
-      reviewId, productId, author, text,
+  static addReview(_id, productId, author, text) {
+    const review = new Review({
+      _id, productId, author, text,
     });
+    return review.save();
   }
 
-  static getReviewById(id) {
-    return reviewModel.find({ where: { id } });
+  static getReview(id) {
+    return Review.findById(id);
   }
 
   static getProductReviews(productId) {
-    return reviewModel.findAll({ where: { productId } });
+    return Review.find({ productId });
   }
 
   static getReviews() {
-    return reviewModel.findAll();
+    return Review.find();
   }
 }

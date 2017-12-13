@@ -1,21 +1,23 @@
-import sequelize from 'sequelize';
-import Product from '../database/models/product';
-import { client } from '../middlewares';
-
-const productModel = Product(client, sequelize.DataTypes);
+import { Product, Review } from '../models';
 
 export default class ProductController {
-  static addProduct(id, name, brand, company, price, isbn) {
-    return productModel.create({
-      id, name, brand, company, price, isbn,
+  static addProduct(_id, name, brand, company, price, isbn) {
+    const product = new Product({
+      _id, name, brand, company, price, isbn,
     });
+    return product.save();
   }
 
-  static getProductById(id) {
-    return productModel.find({ where: { id } });
+  static getProduct(id) {
+    return Product.findById(id);
   }
 
   static getProducts() {
-    return productModel.findAll();
+    return Product.find();
+  }
+
+  static async deleteProduct(_id) {
+    await Review.remove({ productId: _id });
+    return Product.remove({ _id });
   }
 }

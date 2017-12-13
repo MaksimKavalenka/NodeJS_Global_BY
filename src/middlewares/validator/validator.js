@@ -1,4 +1,5 @@
 import ajv from 'ajv';
+import citySchema from './schema/citySchema.json';
 import credentialsSchema from './schema/credentialsSchema.json';
 import productSchema from './schema/productSchema.json';
 import reviewSchema from './schema/reviewSchema.json';
@@ -6,6 +7,7 @@ import userSchema from './schema/userSchema.json';
 import { ExpressMiddleware } from '../../middlewares';
 
 export const schema = {
+  CITY_SCHEMA: 'citySchema',
   CREDENTIALS_SCHEMA: 'credentialsSchema',
   PRODUCT_SCHEMA: 'productSchema',
   REVIEW_SCHEMA: 'reviewSchema',
@@ -13,6 +15,7 @@ export const schema = {
 };
 
 const validator = ajv({ allErrors: true, removeAdditional: 'all' });
+validator.addSchema(citySchema, schema.CITY_SCHEMA);
 validator.addSchema(credentialsSchema, schema.CREDENTIALS_SCHEMA);
 validator.addSchema(productSchema, schema.PRODUCT_SCHEMA);
 validator.addSchema(reviewSchema, schema.REVIEW_SCHEMA);
@@ -28,7 +31,7 @@ export class Validator {
             path: error.dataPath,
             message: error.message,
           }));
-        ExpressMiddleware.sendResponse(res, 400, { error: errors });
+        ExpressMiddleware.sendResponse(res, 400, errors);
       } else {
         next();
       }

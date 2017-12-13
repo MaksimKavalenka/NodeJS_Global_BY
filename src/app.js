@@ -3,9 +3,8 @@ import session from 'express-session';
 import i18n from 'i18n';
 import passport from 'passport';
 import config from './config';
-import { CredentialsController, UserController } from './controllers';
 import { ExpressMiddleware, JWT, logger } from './middlewares';
-import { authRouters, productRouter, userRouter } from './routes';
+import { authRouters, cityRouters, productRouter, userRouter } from './routes';
 
 const app = express();
 
@@ -28,6 +27,7 @@ app.use(ExpressMiddleware.cookieParser());
 app.use(ExpressMiddleware.queryParser());
 app.use(/\/((?!auth).)*/, JWT.verifyJwt());
 app.use('/api', authRouters);
+app.use('/api', cityRouters);
 app.use('/api', productRouter);
 app.use('/api', userRouter);
 
