@@ -1,5 +1,4 @@
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const SwaggerExpress = require('swagger-express-mw');
 
@@ -14,17 +13,9 @@ SwaggerExpress.create(config, (err, swaggerExpress) => {
   // install middleware
   swaggerExpress.register(app);
   app.use('/swagger', express.static(path.join(__dirname, 'dist')));
+  app.use('/swagger.yaml', express.static(path.join(__dirname, 'api/swagger/swagger.yaml')));
 
   const port = process.env.PORT || 10010;
-
-  app.get('/swagger.yaml', (req, res) => {
-    const index = path.join(__dirname, 'api/swagger/swagger.yaml');
-    res.writeHead(200, {
-      'Content-Type': 'text/yaml',
-    });
-    fs.createReadStream(index).pipe(res);
-  });
-
   app.listen(port);
 });
 
