@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import i18n from 'i18n';
@@ -18,6 +19,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: true },
 }));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(i18n.init);
